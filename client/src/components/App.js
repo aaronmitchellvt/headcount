@@ -1,12 +1,17 @@
 import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { hot } from "react-hot-loader/root";
+import { Link } from "react-router-dom"
 
 import getCurrentUser from "../services/getCurrentUser";
 import "../assets/scss/main.scss";
 import RegistrationForm from "./registration/RegistrationForm";
 import SignInForm from "./authentication/SignInForm";
 import TopBar from "./layout/TopBar";
+import NewEventForm from "./NewEventForm";
+import EventList from "./EventList";
+import EventShow from "./EventShow";
+import Home from "./home";
 
 const App = (props) => {
   const [currentUser, setCurrentUser] = useState(undefined);
@@ -27,9 +32,15 @@ const App = (props) => {
     <Router>
       <TopBar user={currentUser} />
       <Switch>
-        <Route exact path="/">
-          <h2>Hello from react</h2>
+
+        <Route exact path="/" component={Home}>
         </Route>
+        <Route exact path="/new" component={NewEventForm} />
+        {/* <Route exact path="/events" component={EventList} /> */}
+        <Route exact path="/events" >
+          <EventList user={currentUser} />
+        </Route>
+        <Route exact path="/events/:id" component={EventShow} />
         <Route exact path="/users/new" component={RegistrationForm} />
         <Route exact path="/user-sessions/new" component={SignInForm} />
       </Switch>
