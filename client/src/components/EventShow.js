@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from "react"
-import JoinEventForm from "./JoinEventForm.js"
+import React, { useState, useEffect } from "react";
+import JoinEventForm from "./JoinEventForm.js";
 import getCurrentUser from "../services/getCurrentUser";
-
 
 const EventShow = (props) => {
   const [currentEvent, setCurrentEvent] = useState({
@@ -10,56 +9,77 @@ const EventShow = (props) => {
     menu: "",
     weather: "",
     comments: "",
-  })
+  });
 
   const [currentUser, setCurrentUser] = useState(undefined);
-  const [eventPlayers, setEventPlayers] = useState([])
+  const [eventPlayers, setEventPlayers] = useState([]);
   const fetchCurrentUser = async () => {
     try {
-      const user = await getCurrentUser()
-      setCurrentUser(user)
-    } catch(err) {
-      setCurrentUser(null)
+      const user = await getCurrentUser();
+      setCurrentUser(user);
+    } catch (err) {
+      setCurrentUser(null);
     }
-  }
+  };
 
-  const eventId = props.match.params.id 
+  const eventId = props.match.params.id;
 
   const fetchEvent = async () => {
     try {
-      const response = await fetch(`/api/v1/events/${eventId}`)
-      const body = await response.json()
-      setCurrentEvent(body.event)
-    } catch(error) {
-      console.log(error)
-    }
-  }
-
-  const getEventPlayers = async () => {
-    try {
-      const response = await fetch(`/api/v1/event-signups/${eventId}`)
-      const body = await response.json()
-      setEventPlayers(eventPlayers.concat(body.event.players))
+      const response = await fetch(`/api/v1/events/${eventId}`);
+      const body = await response.json();
+      setCurrentEvent(body.event);
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
-  }
+  };
+
+  // const getEventPlayers = async () => {
+  //   try {
+  //     const response = await fetch(`/api/v1/event-signups/${eventId}`);
+  //     const body = await response.json();
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
+
+  const postNewJoin = async (newJoinData) => {
+    try {
+      const response = await fetch(`/api/v1/event-signups/${eventId}`, {
+        method: "POST",
+        headers: new Headers({
+          "Content-Type": "application/json",
+        }),
+        body: JSON.stringify(newJoinData),
+      });
+      const body = await response.json();
+      const playerJoinInfo = {
+        email: body.user.email,
+        estimatedArrivalTime: body.newEventSignUp.estimatedArrivalTime
+      }
+      setEventPlayers(eventPlayers.concat(playerJoinInfo))
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   useEffect(() => {
-    fetchEvent(),
-    fetchCurrentUser(),
-    getEventPlayers()
-  }, [])
+    fetchEvent(), fetchCurrentUser()
+  }, []);
+
+  console.log("State of event players", eventPlayers)
 
   const playersArray = eventPlayers.map((player) => {
     return (
       <li key={player.id}>
-        <p>{player.email} - {player.estimatedArrivalTime}</p>
+        <p>
+          {player.email} - {player.estimatedArrivalTime}
+        </p>
       </li>
-    )
-  })
-    
-  return(
+    );
+  });
+
+  return (
     <div className="event-show-container">
       <div className="event-details-left">
         <h2>{currentEvent.title}</h2>
@@ -70,16 +90,15 @@ const EventShow = (props) => {
       </div>
 
       <div className="event-details-right">
-      <JoinEventForm 
-        eventId={eventId}
-      />
-      <h4>These players will be there</h4>
-        <ul>
-        {playersArray}
-        </ul>
+        <JoinEventForm 
+          eventId={eventId} 
+          postNewJoin={postNewJoin}
+        />
+        <h4>These players will be there</h4>
+        <ul>{playersArray}</ul>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default EventShow
+export default EventShow;

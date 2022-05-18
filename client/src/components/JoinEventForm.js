@@ -36,28 +36,29 @@ const JoinEventForm = props => {
     })
   }
 
+  const postNewJoin = props.postNewJoin
   const handleSubmit = (event) => {
     event.preventDefault()
     postNewJoin(newJoin)
     clearForm()
   }
 
-  const eventId = props.eventId
-  const postNewJoin = async () => {
-
-    try {
-      const response = await fetch(`/api/v1/event-signups/${eventId}`, {
-        method: "POST",
-        headers: new Headers({
-          "Content-Type": "application/json",
-        }),
-        body: JSON.stringify(newJoin)
-      })
-      const body = await response.json()
-    } catch(error) {
-      console.log(error)
-    }
-  }
+  // const eventId = props.eventId
+  // const postNewJoin = async () => {
+  //   try {
+  //     const response = await fetch(`/api/v1/event-signups/${eventId}`, {
+  //       method: "POST",
+  //       headers: new Headers({
+  //         "Content-Type": "application/json",
+  //       }),
+  //       body: JSON.stringify(newJoin)
+  //     })
+  //     const body = await response.json()
+  //     console.log("Body from join event form: ", body)
+  //   } catch(error) {
+  //     console.log(error)
+  //   }
+  // }
 
   return(
     <div className="join-event-form">
