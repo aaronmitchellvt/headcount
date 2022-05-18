@@ -11,16 +11,8 @@ const EventShow = (props) => {
     comments: "",
   });
 
-  const [currentUser, setCurrentUser] = useState(undefined);
   const [eventPlayers, setEventPlayers] = useState([]);
-  const fetchCurrentUser = async () => {
-    try {
-      const user = await getCurrentUser();
-      setCurrentUser(user);
-    } catch (err) {
-      setCurrentUser(null);
-    }
-  };
+
 
   const eventId = props.match.params.id;
 
@@ -53,8 +45,10 @@ const EventShow = (props) => {
         body: JSON.stringify(newJoinData),
       });
       const body = await response.json();
+      console.log("post body response: ", body)
       const playerJoinInfo = {
-        email: body.user.email,
+        playerName: body.user.playerName,
+        team: body.user.team,
         estimatedArrivalTime: body.newEventSignUp.estimatedArrivalTime
       }
       setEventPlayers(eventPlayers.concat(playerJoinInfo))
@@ -64,7 +58,7 @@ const EventShow = (props) => {
   };
 
   useEffect(() => {
-    fetchEvent(), fetchCurrentUser()
+    fetchEvent()
   }, []);
 
   console.log("State of event players", eventPlayers)
@@ -73,7 +67,7 @@ const EventShow = (props) => {
     return (
       <li key={player.id}>
         <p>
-          {player.email} - {player.estimatedArrivalTime}
+          {player.playerName} of {player.team} - {player.estimatedArrivalTime}
         </p>
       </li>
     );
