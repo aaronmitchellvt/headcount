@@ -11,7 +11,7 @@ eventSignUpRouter.post("/:eventId", async (req, res) => {
       eventId: req.params.eventId})
     const user = await User.query().findById(req.user.id)
     res.status(201).json({ newEventSignUp, user })
-  } catch(error) {
+  } catch(error) {cd 
     console.log(error)
   }
 })
