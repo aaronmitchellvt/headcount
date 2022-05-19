@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import EventTile from "./EventTile";
 import NewEventForm from "./NewEventForm";
+import Dropzone from "react-dropzone"
+
 
 const EventList = (props) => {
   const [events, setEvents] = useState([]);
@@ -24,23 +26,56 @@ const EventList = (props) => {
   }
 
   const postEvent = async (newEventData) => {
+
+    //---------- for everything but layoutTitle and layoutImg ------------//
+    // try {
+    //   const response = await fetch(`/api/v1/new`, {
+    //     method: "POST",
+    //     headers: new Headers({
+    //       "Content-Type": "application/json",
+    //     }),
+    //     body: JSON.stringify(newEventData),
+    //   });
+    //   const body = await response.json();
+    //   setEvents(events.concat(body.event));
+    // } catch (error) {
+    //   console.log(error);
+    // }
+    //---------------------------------------------------------------------//
+
+    const newLayoutDataBody = new FormData()
+    newLayoutDataBody.append("title", newEventData.title)
+    newLayoutDataBody.append("hours", newEventData.hours)
+    newLayoutDataBody.append("menu", newEventData.menu)
+    newLayoutDataBody.append("weather", newEventData.weather)
+    newLayoutDataBody.append("layoutImg", newEventData.layoutImg)
+    newLayoutDataBody.append("layoutTitle", newEventData.layoutTitle)
+    newLayoutDataBody.append("comments", newEventData.comments)
+
+
     try {
-      const response = await fetch(`/api/v1/new`, {
+      const response = await fetch("/api/v1/new", {//set up a router for images
         method: "POST",
-        headers: new Headers({
-          "Content-Type": "application/json",
-        }),
-        body: JSON.stringify(newEventData),
-      });
-      const body = await response.json();
-      setEvents(events.concat(body.event));
+        headers: {
+          "Accept": "image/jpeg"
+        },
+        body: newLayoutDataBody
+      })
+      if (!response.ok) {
+        throw new Error(`${response.status} (${response.statusText})`)
+      }
+      const body = await response.json()
+      setEvents([
+        ...events,
+        body.event
+      ])
     } catch (error) {
-      console.log(error);
+      console.error(`Error in post event Fetch: ${error.message}`)
     }
   };
 
   const eventTiles = events.map((event) => {
-    return <EventTile key={event.id} {...event} />;
+    return <EventTile key={event.id} event={event} id={event.id}/>;
   });
   return (
     <div className="event-list-container">

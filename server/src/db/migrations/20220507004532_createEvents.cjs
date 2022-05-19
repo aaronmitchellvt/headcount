@@ -13,6 +13,8 @@ exports.up = async (knex) => {
     table.string("menu")
     table.string("weather")
     table.string("comments")
+    table.string("layoutTitle")
+    table.string("layoutImg")
     table.timestamp("createdAt").notNullable().defaultTo(knex.fn.now())
     table.timestamp("updatedAt").notNullable().defaultTo(knex.fn.now())
   })
