@@ -74,6 +74,7 @@ const EventShow = (props) => {
   });
 
   return (
+    <>
     <div className="event-show-container">
       <div className="event-details-left">
         <h2>{currentEvent.title}</h2>
@@ -92,6 +93,11 @@ const EventShow = (props) => {
         <ul>{playersArray}</ul>
       </div>
     </div>
+    <div>
+      <img src={currentEvent.layoutImg}/>
+    </div>
+    </>
+
   );
 };
 
