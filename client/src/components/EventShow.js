@@ -31,9 +31,10 @@ const EventShow = (props) => {
   //     const response = await fetch(`/api/v1/event-signups/${eventId}`);
   //     const body = await response.json();
   //   } catch (error) {
-  //     console.log(error);
+  //     console.log(error)
   //   }
   // };
+
 
   const postNewJoin = async (newJoinData) => {
     try {
@@ -47,6 +48,7 @@ const EventShow = (props) => {
       const body = await response.json();
       console.log("post body response: ", body)
       const playerJoinInfo = {
+        profileImg: body.user.profileImg,
         playerName: body.user.playerName,
         team: body.user.team,
         estimatedArrivalTime: body.newEventSignUp.estimatedArrivalTime
@@ -69,6 +71,7 @@ const EventShow = (props) => {
         <p>
           {player.playerName} of {player.team} - {player.estimatedArrivalTime}
         </p>
+        <img src={player.profileImg}/>
       </li>
     );
   });

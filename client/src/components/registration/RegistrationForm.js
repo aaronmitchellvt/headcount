@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import FormError from "../layout/FormError";
 import config from "../../config";
+import Dropzone from "react-dropzone";
 
 const RegistrationForm = () => {
   const [userPayload, setUserPayload] = useState({
+    profileImg: {},
     playerName: "",
     team: "",
     email: "",
@@ -53,28 +55,60 @@ const RegistrationForm = () => {
 
   const onSubmit = async (event) => {
     event.preventDefault();
-    validateInput(userPayload);
+    const newUserData = new FormData()
+    newUserData.append("profileImg", userPayload.profileImg)
+    newUserData.append("playerName", userPayload.playerName)
+    newUserData.append("team", userPayload.team)
+    newUserData.append("email", userPayload.email)
+    newUserData.append("password", userPayload.password)
+    newUserData.append("passwordConfirmation", userPayload.passwordConfirmation)
+
     try {
-      if (Object.keys(errors).length === 0) {
-        const response = await fetch("/api/v1/users", {
-          method: "post",
-          body: JSON.stringify(userPayload),
-          headers: new Headers({
-            "Content-Type": "application/json",
-          }),
-        });
-        if (!response.ok) {
-          const errorMessage = `${response.status} (${response.statusText})`;
-          const error = new Error(errorMessage);
-          throw error;
-        }
-        const userData = await response.json();
-        setShouldRedirect(true);
+      const response = await fetch("/api/v1/users", {//set up a router for images
+        method: "POST",
+        headers: {
+          "Accept": "image/jpeg"
+        },
+        body: newUserData
+      })
+      if (!response.ok) {
+        throw new Error(`${response.status} (${response.statusText})`)
       }
-    } catch (err) {
-      console.error(`Error in fetch: ${err.message}`);
+      const userData = await response.json()
+      setShouldRedirect(true);
+    } catch (error) {
+      console.error(`Error in post event Fetch: ${error.message}`)
     }
+    // validateInput(userPayload);
+    // try {
+    //   if (Object.keys(errors).length === 0) {
+    //     const response = await fetch("/api/v1/users", {
+    //       method: "post",
+    //       body: JSON.stringify(userPayload),
+    //       headers: new Headers({
+    //         "Content-Type": "application/json",
+    //       }),
+    //     });
+    //     if (!response.ok) {
+    //       const errorMessage = `${response.status} (${response.statusText})`;
+    //       const error = new Error(errorMessage);
+    //       throw error;
+    //     }
+    //     const userData = await response.json();
+    //     setShouldRedirect(true);
+    //   }
+    // } catch (err) {
+    //   console.error(`Error in fetch: ${err.message}`);
+    // }
   };
+
+
+  const handleImageUpload = (acceptedImage) => {
+    setUserPayload({
+      ...userPayload,
+      profileImg: acceptedImage[0]
+    })
+  }
 
   const onInputChange = (event) => {
     setUserPayload({
@@ -92,6 +126,16 @@ const RegistrationForm = () => {
       <h1>Register</h1>
       <form onSubmit={onSubmit}>
         <div>
+        <Dropzone onDrop={handleImageUpload}>
+          {({ getRootProps, getInputProps }) => (
+            <section>
+              <div {...getRootProps()}>
+                <input {...getInputProps()} />
+                <p>Upload Profile Picture - drag and drop or click to upload</p>
+              </div>
+            </section>
+          )}
+        </Dropzone>
           <label>
             Name
             <input type="text" name="playerName" value={userPayload.playerName} onChange={onInputChange} />

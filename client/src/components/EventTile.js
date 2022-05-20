@@ -12,7 +12,7 @@ const EventTile = props => {
       {/* <h5>Comments: {props.event.comments}</h5> */}
       <h5>Layout: {props.event.layoutTitle}</h5>
       <h5><Link to ={`/events/${eventId}`}>Join Event</Link></h5>
-      <img src={props.event.layoutImg}/>
+      {/* <img src={props.event.layoutImg}/> */}
     </div>
   )
 }
