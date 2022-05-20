@@ -11,6 +11,7 @@ import TopBar from "./layout/TopBar";
 import NewEventForm from "./NewEventForm";
 import EventList from "./EventList";
 import EventShow from "./EventShow";
+import PlayerShow from "./PlayerShow";
 import Home from "./home";
 
 const App = (props) => {
@@ -40,6 +41,11 @@ const App = (props) => {
         <Route exact path="/events" >
           <EventList user={currentUser} />
         </Route>
+
+        {/* <Route exact path="/events/:id" >
+          <EventShow user={currentUser} />
+        </Route> */}
+        <Route exact path="/players/:id" component={PlayerShow} />
         <Route exact path="/events/:id" component={EventShow} />
         <Route exact path="/users/new" component={RegistrationForm} />
         <Route exact path="/user-sessions/new" component={SignInForm} />

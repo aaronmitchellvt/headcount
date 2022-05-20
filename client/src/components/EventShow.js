@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import JoinEventForm from "./JoinEventForm.js";
-import getCurrentUser from "../services/getCurrentUser";
+import { Link } from "react-router-dom"
 
 const EventShow = (props) => {
   const [currentEvent, setCurrentEvent] = useState({
@@ -15,6 +15,9 @@ const EventShow = (props) => {
 
 
   const eventId = props.match.params.id;
+  // if(props.user){
+  //   console.log("User from app : ", props.user.email)
+  // }
 
   const fetchEvent = async () => {
     try {
@@ -48,6 +51,7 @@ const EventShow = (props) => {
       const body = await response.json();
       console.log("post body response: ", body)
       const playerJoinInfo = {
+        id: body.user.id,
         profileImg: body.user.profileImg,
         playerName: body.user.playerName,
         team: body.user.team,
@@ -69,7 +73,7 @@ const EventShow = (props) => {
     return (
       <li key={player.id}>
         <p>
-          {player.playerName} of {player.team} - {player.estimatedArrivalTime}
+          <Link to = {`/players/${player.id}`}>{player.playerName} of {player.team} - {player.estimatedArrivalTime}</Link>
         </p>
         <img src={player.profileImg}/>
       </li>
