@@ -26,23 +26,6 @@ const EventList = (props) => {
   }
 
   const postEvent = async (newEventData) => {
-
-    //---------- for everything but layoutTitle and layoutImg ------------//
-    // try {
-    //   const response = await fetch(`/api/v1/new`, {
-    //     method: "POST",
-    //     headers: new Headers({
-    //       "Content-Type": "application/json",
-    //     }),
-    //     body: JSON.stringify(newEventData),
-    //   });
-    //   const body = await response.json();
-    //   setEvents(events.concat(body.event));
-    // } catch (error) {
-    //   console.log(error);
-    // }
-    //---------------------------------------------------------------------//
-
     const newLayoutDataBody = new FormData()
     newLayoutDataBody.append("title", newEventData.title)
     newLayoutDataBody.append("hours", newEventData.hours)
@@ -52,9 +35,8 @@ const EventList = (props) => {
     newLayoutDataBody.append("layoutTitle", newEventData.layoutTitle)
     newLayoutDataBody.append("comments", newEventData.comments)
 
-
     try {
-      const response = await fetch("/api/v1/new", {//set up a router for images
+      const response = await fetch("/api/v1/new", {
         method: "POST",
         headers: {
           "Accept": "image/jpeg"

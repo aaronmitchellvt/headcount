@@ -6,6 +6,11 @@ import uploadImage from "../../../services/uploadImage.js"
 
 const usersRouter = new express.Router();
 
+usersRouter.get("/:id", async (req, res) => {
+  const player = await User.query().findById(req.params.id)
+  return res.status(200).json({ player })
+})
+
 usersRouter.post("/", uploadImage.single("profileImg"), async (req, res) => {
   console.log(req.body)
   const { email, password, playerName, team, passwordConfirmation } = req.body;
@@ -17,6 +22,7 @@ usersRouter.post("/", uploadImage.single("profileImg"), async (req, res) => {
   } catch (error) {
     return res.status(500).json({ errors: error })
   }
+});
   // try {
   //   const persistedUser = await User.query().insertAndFetch({ email, password, team, playerName });
   //   return req.login(persistedUser, () => {
@@ -37,7 +43,7 @@ usersRouter.post("/", uploadImage.single("profileImg"), async (req, res) => {
     // console.log("Body hitting events router: ", body)
     // console.log("data in events router", data)
     // console.log(req.file.location)
-});
+
 
 // eventsRouter.post("/", uploadImage.single("layoutImg"), async (req, res) => {
 //   try {
