@@ -29,6 +29,11 @@ const App = (props) => {
     fetchCurrentUser()
   }, [])
 
+  let adminFlag = false
+  if(currentUser && currentUser.email === "admin@email.com"){
+    adminFlag = true
+  }
+
   return (
     <Router>
       <TopBar user={currentUser} />
@@ -39,7 +44,7 @@ const App = (props) => {
         <Route exact path="/new" component={NewEventForm} />
         {/* <Route exact path="/events" component={EventList} /> */}
         <Route exact path="/events" >
-          <EventList user={currentUser} />
+          <EventList user={currentUser} adminFlag={adminFlag} />
         </Route>
 
         {/* <Route exact path="/events/:id" >

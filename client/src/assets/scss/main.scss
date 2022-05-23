@@ -17,14 +17,19 @@
   border-style: outset;
   padding: 2em;
   margin: 2em;
-  background-color:#e33d3d;
+  background-color:#0087c0;
+}
+
+.event-tile a {
+  color: inherit;
+  text-decoration: none;
 }
 
 .event-list{
   display: flex;
   color:white;
 }
-
+#ffffff
 .jumbotron{
   display: flex;
   background-color: #0a50c2;
@@ -35,36 +40,97 @@
 }
 
 .event-list-container{
-  background-color: #3c84fa;
+  background-color:#ffffff;
 }
 
 .event-list-form{
   background-color: aliceblue;
+  padding:10em;
 }
 
-.event-show-container{
+.event-card-container{
+  color:white;
   display: flex;
+  align-items: stretch;
+  flex-wrap: wrap;
   justify-content: space-evenly;
-  background-color: #3c84fa;
+  // background-color: #ddd6d6;
   height: auto;
 }
 
 .event-details-left{
-  color:white;
+  color:#ffffff;
+  min-width: 40%;
   border-style: outset;
-  background-color:#e33d3d;
-  border-radius: 2%;
+  background-color:#0087c0;
+  // border-radius: 2%;
   padding: 1.5em;
   margin-top: 3em;
   margin-bottom: 3em;
 }
 
 .event-details-right{
-  color:white;
+  color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  min-width: 40%;
   border-style: outset;
-  background-color:#e33d3d;  
-  border-radius: 2%;
+  background-color:#0087c0;  
+  // border-radius: 2%;
   padding: 1.5em;
   margin-top: 3em;
   margin-bottom: 3em;
 }
+
+.event-layout{
+  min-width: 70%;
+  margin-left: 10em;
+  margin-right: 10em;
+}
+
+.joined-players-list{
+  height: 100%;
+  border: black;
+  overflow: scroll;
+}
+.joined-players-pic{
+  height: auto;
+  width: auto;
+  border-radius: 3%;
+  padding: 1px;
+}
+
+.joined-player-tile{
+  display: flex;
+  height: 5em;
+  align-items: center;
+  padding: .5em;
+}
+
+.joined-player-info{
+  width: auto;
+}
+.joined-player-image-container{
+  width: 5em;
+  background-color: #0a50c2;
+  margin: 10px;
+}
+
+.event-show-section {
+  background-color:#ffffff;
+}
+
+.event-jumbotron {
+  color:#ffffff;
+  text-align: center;
+  background-color:#b21519 ;
+}
+
+.join-event-form {
+  color:white;
+}
+
+// .join-event-form-container{
+//   border-style: solid;
+//   border-color: black;
+// }

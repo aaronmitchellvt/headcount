@@ -6,6 +6,7 @@ import Dropzone from "react-dropzone"
 
 const EventList = (props) => {
   const [events, setEvents] = useState([]);
+  const [showForm, setShowForm] = useState(false)
 
   const getEvents = async () => {
     try {
@@ -21,9 +22,7 @@ const EventList = (props) => {
     getEvents();
   }, []);
 
-  if(props.user){
-    console.log("User from app : ", props.user.email)
-  }
+  console.log(props.adminFlag)
 
   const postEvent = async (newEventData) => {
     const newLayoutDataBody = new FormData()
@@ -61,12 +60,12 @@ const EventList = (props) => {
   });
   return (
     <div className="event-list-container">
-      <div className="jumbotron">
+      <div className="event-jumbotron">
         <h1>Events</h1>
       </div>
       <div className="event-list">{eventTiles}</div>
       <div className="event-list-form">
-      <NewEventForm postEvent={postEvent} />
+        {props.adminFlag && <NewEventForm postEvent={postEvent} />}
       </div>
     </div>
   );
