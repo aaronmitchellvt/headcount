@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import JoinEventForm from "./JoinEventForm.js";
-import { Link } from "react-router-dom"
+import { Link } from "react-router-dom";
+import JoinedPlayerTile from "./JoinedPlayerTile.js";
 
 const EventShow = (props) => {
   const [currentEvent, setCurrentEvent] = useState({
@@ -12,7 +13,7 @@ const EventShow = (props) => {
   });
 
   const [eventPlayers, setEventPlayers] = useState([]);
-
+  const [showForm, setShowForm] = useState(true);
 
   const eventId = props.match.params.id;
   // if(props.user){
@@ -38,7 +39,6 @@ const EventShow = (props) => {
   //   }
   // };
 
-
   const postNewJoin = async (newJoinData) => {
     try {
       const response = await fetch(`/api/v1/event-signups/${eventId}`, {
@@ -48,64 +48,69 @@ const EventShow = (props) => {
         }),
         body: JSON.stringify(newJoinData),
       });
+      if (response.ok) {
+        setShowForm(false);
+      }
       const body = await response.json();
-      console.log("post body response: ", body)
+      console.log("post body response: ", body);
       const playerJoinInfo = {
         id: body.user.id,
         profileImg: body.user.profileImg,
         playerName: body.user.playerName,
         team: body.user.team,
-        estimatedArrivalTime: body.newEventSignUp.estimatedArrivalTime
-      }
-      setEventPlayers(eventPlayers.concat(playerJoinInfo))
+        estimatedArrivalTime: body.newEventSignUp.estimatedArrivalTime,
+      };
+      setEventPlayers(eventPlayers.concat(playerJoinInfo));
     } catch (error) {
       console.log(error);
     }
   };
 
   useEffect(() => {
-    fetchEvent()
+    fetchEvent();
   }, []);
 
-  console.log("State of event players", eventPlayers)
+  console.log("State of event players", eventPlayers);
 
   const playersArray = eventPlayers.map((player) => {
-    return (
-      <li key={player.id}>
-        <p>
-          <Link to = {`/players/${player.id}`}>{player.playerName} of {player.team} - {player.estimatedArrivalTime}</Link>
-        </p>
-        <img src={player.profileImg}/>
-      </li>
-    );
+    return <JoinedPlayerTile player={player} />;
   });
 
   return (
-    <>
-    <div className="event-show-container">
-      <div className="event-details-left">
-        <h2>{currentEvent.title}</h2>
-        <h3>{currentEvent.hours}</h3>
-        <h4>Snack Shot Menu: {currentEvent.menu}</h4>
-        <h4>Weather: {currentEvent.weather}</h4>
-        <h4>Comments: {currentEvent.comments}</h4>
-      </div>
+    <section className="event-show-section">
+      <div className="event-card-container">
+        <div className="event-details-left">
+          <h2>{currentEvent.title}</h2>
+          <h3>{currentEvent.hours}</h3>
+          <h4>Snack Shot Menu: {currentEvent.menu}</h4>
+          <h4>Weather: {currentEvent.weather}</h4>
+          <h4>Comments: {currentEvent.comments}</h4>
+        </div>
 
-      <div className="event-details-right">
-        <JoinEventForm 
-          eventId={eventId} 
-          postNewJoin={postNewJoin}
-        />
-        <h4>These players will be there</h4>
-        <ul>{playersArray}</ul>
+        <div className="event-details-right">
+          <div className="join-event-form-container">
+            {showForm && <JoinEventForm eventId={eventId} postNewJoin={postNewJoin} />}
+          </div>
+          <h5>These players will be there</h5>
+          <div className="joined-players-list">
+            <ul>{playersArray}</ul>
+          </div>
+        </div>
       </div>
-    </div>
-    <div>
-      <img src={currentEvent.layoutImg}/>
-    </div>
-    </>
-
+      <div className="event-layout">
+        <img src={currentEvent.layoutImg} />
+      </div>
+    </section>
   );
 };
 
 export default EventShow;
+
+// <li key={player.id}>
+//   <p>
+//     <Link to={`/players/${player.id}`}>
+//       {player.playerName} of {player.team} - {player.estimatedArrivalTime}
+//     </Link>
+//   </p>
+//   <img src={player.profileImg} />
+// </li>

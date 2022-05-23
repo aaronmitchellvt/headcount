@@ -6,6 +6,7 @@ const JoinEventForm = props => {
     id: "",
     email: ""
   });
+
   const fetchCurrentUser = async () => {
     try {
       const user = await getCurrentUser()
@@ -43,6 +44,21 @@ const JoinEventForm = props => {
     clearForm()
   }
 
+  return(
+    <div>
+      <h3>Join this event!</h3>
+      <form className="join-event-form" onSubmit={handleSubmit}>
+        <label>
+          Estimate Arrival Time:
+          <input type="text" name="estimatedArrivalTime" onChange={handleChange} value={newJoin.estimatedArrivalTime} />
+        </label>
+          <input type="submit" value="Join Event"></input>
+      </form>
+    </div>
+  )
+}
+export default JoinEventForm
+
   // const eventId = props.eventId
   // const postNewJoin = async () => {
   //   try {
@@ -59,20 +75,3 @@ const JoinEventForm = props => {
   //     console.log(error)
   //   }
   // }
-
-  return(
-    <div className="join-event-form">
-      <h3>Join this event!</h3>
-      <form onSubmit={handleSubmit}>
-        <label>
-          Estimate Arrival Time:
-          <input type="text" name="estimatedArrivalTime" onChange={handleChange} value={newJoin.estimatedArrivalTime} />
-        </label>
-        <div>
-          <input type="submit" value="Join Event"></input>
-        </div>
-      </form>
-    </div>
-  )
-}
-export default JoinEventForm
