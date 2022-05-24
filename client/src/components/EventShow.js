@@ -6,20 +6,24 @@ import JoinedPlayerTile from "./JoinedPlayerTile.js";
 const EventShow = (props) => {
   const [currentEvent, setCurrentEvent] = useState({
     title: "",
+    date: "",
     hours: "",
     menu: "",
-    weather: "",
+    forecastDate: "",
     comments: "",
   });
 
   const [eventPlayers, setEventPlayers] = useState([]);
   const [showForm, setShowForm] = useState(true);
+  const [temp, setTemp] = useState("Don't know yet")
+  // const [eventDay, setEventDay] = useState("Too early to know!")
 
   const eventId = props.match.params.id;
   // if(props.user){
   //   console.log("User from app : ", props.user.email)
   // }
 
+  // setEventDay(currentEvent.forecastDate)
   const fetchEvent = async () => {
     try {
       const response = await fetch(`/api/v1/events/${eventId}`);
@@ -66,9 +70,36 @@ const EventShow = (props) => {
     }
   };
 
+
+  const eventDay = "2022-05-26"
+  console.log("Event Day: ", eventDay)
+  const fetchWeatherForecast = async () => {
+    const response  = await fetch(`/api/v1/weather`)
+    const parsedForecast = await response.json()
+    const periods = parsedForecast.forecastData.properties.periods
+
+    periods.forEach((period) => {
+      const trimmedDate = period.startTime.slice(0,10)
+      // console.log("trimmed date: ", trimmedDate)
+      // console.log("Temperature", period.temperature)
+      // console.log("Period", period)
+      if(trimmedDate === eventDay && period.isDaytime) {
+        console.log("MATCH!!!")
+        setTemp(`${period.temperature}F - ${period.shortForecast}`)
+        // weatherForecast = period.temperature
+      }
+      })
+
+  }
+
   useEffect(() => {
+    fetchWeatherForecast(),
     fetchEvent();
   }, []);
+
+  // let eventDay = currentEvent.weather
+  // console.log("Forecast outside of fetch :", weatherForecast)
+
 
   console.log("State of event players", eventPlayers);
 
@@ -81,9 +112,10 @@ const EventShow = (props) => {
       <div className="event-card-container">
         <div className="event-details-left">
           <h2>{currentEvent.title}</h2>
+          <h3>{currentEvent.date}</h3>
           <h3>{currentEvent.hours}</h3>
           <h4>Snack Shot Menu: {currentEvent.menu}</h4>
-          <h4>Weather: {currentEvent.weather}</h4>
+          <h4>Weather: {temp}</h4>
           <h4>Comments: {currentEvent.comments}</h4>
         </div>
 
@@ -114,3 +146,25 @@ export default EventShow;
 //   </p>
 //   <img src={player.profileImg} />
 // </li>
+
+  // const getWeatherForecast = async () => {
+  //   const url = "https://api.weather.gov/gridpoints/GYX/32,21/forecast"
+  //   try {
+  //     const response = await fetch( url, {
+  //       method: "GET"
+  //     });
+  //     const body = await response.json();
+  //     const periods = body.properties.periods
+      // periods.forEach((period) => {
+      //   const trimmedDate = period.startTime.slice(0,10)
+      //   if(trimmedDate === eventDay && period.isDaytime) {
+      //     eventDayWeather = period.detailedForecast
+      //   }
+      //   // console.log("Start time: " + trimmedDate + " is day time: " + period.isDaytime)
+      // })
+  //       console.log("forecast for event day: ", eventDayWeather)
+  //     // console.log("Forecast Periods: ", periods);
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // }

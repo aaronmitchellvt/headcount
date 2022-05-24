@@ -25,11 +25,13 @@ const EventList = (props) => {
   console.log(props.adminFlag)
 
   const postEvent = async (newEventData) => {
+
     const newLayoutDataBody = new FormData()
     newLayoutDataBody.append("title", newEventData.title)
+    newLayoutDataBody.append("date", newEventData.date)
     newLayoutDataBody.append("hours", newEventData.hours)
     newLayoutDataBody.append("menu", newEventData.menu)
-    newLayoutDataBody.append("weather", newEventData.weather)
+    newLayoutDataBody.append("forecastDate", newEventData.forecastDate)
     newLayoutDataBody.append("layoutImg", newEventData.layoutImg)
     newLayoutDataBody.append("layoutTitle", newEventData.layoutTitle)
     newLayoutDataBody.append("comments", newEventData.comments)
