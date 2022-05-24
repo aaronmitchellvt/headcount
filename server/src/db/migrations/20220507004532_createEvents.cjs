@@ -9,9 +9,10 @@ exports.up = async (knex) => {
   return knex.schema.createTable("events", (table) => {
     table.bigIncrements("id")
     table.string("title").notNullable()
+    table.string("date").notNullable()
     table.string("hours").notNullable()
     table.string("menu")
-    table.string("weather")
+    table.string("forecastDate")
     table.string("comments")
     table.string("layoutTitle")
     table.string("layoutImg")

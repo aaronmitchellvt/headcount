@@ -5,9 +5,10 @@ import Dropzone from "react-dropzone"
 const NewEventForm = ({ postEvent }) => {
   const [newEvent, setEvent] = useState({
     title: "",
+    date: "",
     hours: "",
     menu: "",
-    weather: "",
+    forecastDate: "",
     layoutTitle: "",
     layoutImg: {},
     comments: "",
@@ -36,9 +37,10 @@ const NewEventForm = ({ postEvent }) => {
   const clearForm = () => {
     setEvent({
       title: "",
+      date: "",
       hours: "",
       menu: "",
-      weather: "",
+      forecastDate: "",
       layoutTitle: "",
       layoutImg: {},
       comments: "",
@@ -54,6 +56,10 @@ const NewEventForm = ({ postEvent }) => {
           <input type="text" name="title" onChange={handleInputChange} value={newEvent.title} />
         </label>
         <label>
+          Event Date | format ex. Sep 25
+          <input type="text" name="date" onChange={handleInputChange} value={newEvent.date} />
+        </label>
+        <label>
           Hours:
           <input type="text" name="hours" onChange={handleInputChange} value={newEvent.hours} />
         </label>
@@ -62,8 +68,8 @@ const NewEventForm = ({ postEvent }) => {
           <input type="text" name="menu" onChange={handleInputChange} value={newEvent.menu} />
         </label>
         <label>
-          Weather:
-          <input type="text" name="weather" onChange={handleInputChange} value={newEvent.weather} />
+          Date of event | format must be yyyy-mm-dd
+          <input type="text" name="forecastDate" onChange={handleInputChange} value={newEvent.forecastDate} />
         </label>
         <label>
           Layout Title:

@@ -14,6 +14,7 @@ eventsRouter.get("/:id", async (req, res) => {
 })
 
 eventsRouter.post("/", uploadImage.single("layoutImg"), async (req, res) => {
+  console.log("Body: ", req.body)
   try {
     const { body } = req
     const data = {
