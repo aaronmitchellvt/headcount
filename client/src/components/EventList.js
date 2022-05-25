@@ -63,7 +63,7 @@ const EventList = (props) => {
   return (
     <div className="event-list-container">
       <div className="event-jumbotron">
-        <h1>Events</h1>
+        <h1>Upcoming Events</h1>
       </div>
       <div className="event-list">{eventTiles}</div>
       <div className="event-list-form">

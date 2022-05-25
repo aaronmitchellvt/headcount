@@ -13,6 +13,7 @@ import EventList from "./EventList";
 import EventShow from "./EventShow";
 import PlayerShow from "./PlayerShow";
 import Home from "./home";
+import Footer from "./Footer";
 
 const App = (props) => {
   const [currentUser, setCurrentUser] = useState(undefined);

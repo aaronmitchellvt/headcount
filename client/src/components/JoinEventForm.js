@@ -46,11 +46,11 @@ const JoinEventForm = props => {
 
   return(
     <div>
-      <h3>Join this event!</h3>
+      <h3>Check In!</h3>
       <form className="join-event-form" onSubmit={handleSubmit}>
-        <label>
-          Estimate Arrival Time:
-          <input type="text" name="estimatedArrivalTime" onChange={handleChange} value={newJoin.estimatedArrivalTime} />
+        <label className="white-text">
+          Estimated Arrival Time:
+          <input className="join-event-input" type="text" name="estimatedArrivalTime" onChange={handleChange} value={newJoin.estimatedArrivalTime} />
         </label>
           <input type="submit" value="Join Event"></input>
       </form>

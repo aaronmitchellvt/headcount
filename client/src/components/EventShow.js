@@ -9,13 +9,13 @@ const EventShow = (props) => {
     date: "",
     hours: "",
     menu: "",
-    forecastDate: "",
+    forecastDate: "Too early to know!",
     comments: "",
   });
 
   const [eventPlayers, setEventPlayers] = useState([]);
   const [showForm, setShowForm] = useState(true);
-  const [temp, setTemp] = useState("Don't know yet")
+  const [temp, setTemp] = useState("Too early to know!")
   // const [eventDay, setEventDay] = useState("Too early to know!")
 
   const eventId = props.match.params.id;
@@ -23,6 +23,10 @@ const EventShow = (props) => {
   //   console.log("User from app : ", props.user.email)
   // }
 
+
+  // const getEventDay = () => {
+  //   setEventDay(currentEvent.forecastDate)
+  // }
   // setEventDay(currentEvent.forecastDate)
   const fetchEvent = async () => {
     try {
@@ -72,7 +76,7 @@ const EventShow = (props) => {
 
 
   const eventDay = "2022-05-26"
-  console.log("Event Day: ", eventDay)
+  // console.log("Event Day: ", eventDay)
   const fetchWeatherForecast = async () => {
     const response  = await fetch(`/api/v1/weather`)
     const parsedForecast = await response.json()
@@ -89,18 +93,17 @@ const EventShow = (props) => {
         // weatherForecast = period.temperature
       }
       })
-
   }
 
   useEffect(() => {
     fetchWeatherForecast(),
-    fetchEvent();
+    fetchEvent()
   }, []);
 
   // let eventDay = currentEvent.weather
   // console.log("Forecast outside of fetch :", weatherForecast)
 
-
+  console.log("Event Day: ", currentEvent.forecastDate)
   console.log("State of event players", eventPlayers);
 
   const playersArray = eventPlayers.map((player) => {
@@ -123,9 +126,9 @@ const EventShow = (props) => {
           <div className="join-event-form-container">
             {showForm && <JoinEventForm eventId={eventId} postNewJoin={postNewJoin} />}
           </div>
-          <h5>These players will be there</h5>
+          <h4 className="font-theme">These players will be there</h4>
           <div className="joined-players-list">
-            <ul>{playersArray}</ul>
+            {playersArray}
           </div>
         </div>
       </div>

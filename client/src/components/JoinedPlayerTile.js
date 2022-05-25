@@ -7,7 +7,9 @@ const JoinedPlayerTile = props => {
       <div className="joined-player-image-container">      
         <img className="joined-player-pic" src={props.player.profileImg} />
       </div>
-      <p className="joined-player-info">{props.player.playerName} at {props.player.estimatedArrivalTime}</p>
+      <div className="joined-player-info">
+        <h5>{props.player.playerName} at {props.player.estimatedArrivalTime}</h5>
+      </div>
     </div>
 
   )
