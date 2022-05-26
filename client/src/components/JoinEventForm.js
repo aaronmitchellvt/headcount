@@ -2,6 +2,7 @@ import React, {useState, useEffect} from "react"
 import getCurrentUser from "../services/getCurrentUser";
 
 const JoinEventForm = props => {
+  const [toggle, setToggle] = useState(false)
   const [currentUser, setCurrentUser] = useState({
     id: "",
     email: ""
@@ -44,15 +45,37 @@ const JoinEventForm = props => {
     clearForm()
   }
 
+  const toggler = () => {
+    setToggle(!toggle)
+    console.log(toggle)
+  }
+
+  let submitButton = ""
+  if(toggle && newJoin.estimatedArrivalTime != ""){
+    submitButton = <input className="button-join" type="submit" value="Join Event"></input>
+  }
+
   return(
     <div>
-      <h3>Join this event!</h3>
+      <h3>Check In!</h3>
       <form className="join-event-form" onSubmit={handleSubmit}>
-        <label>
-          Estimate Arrival Time:
-          <input type="text" name="estimatedArrivalTime" onChange={handleChange} value={newJoin.estimatedArrivalTime} />
+
+      <label className="white-text">
+          Estimated Arrival Time:
+          <input className="join-event-input" type="text" name="estimatedArrivalTime" onChange={handleChange} value={newJoin.estimatedArrivalTime} />
         </label>
-          <input type="submit" value="Join Event"></input>
+        {submitButton}
+
+
+        <label onClick={toggler} className="checkbox"> *I confirm that I WILL be there*        
+          <input type="checkbox"></input>
+        </label>
+        {/* {
+          if(toggle){
+            return <input type="submit" value="Join Event"></input>
+          }
+        } */}
+        
       </form>
     </div>
   )

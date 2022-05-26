@@ -13,6 +13,7 @@ import EventList from "./EventList";
 import EventShow from "./EventShow";
 import PlayerShow from "./PlayerShow";
 import Home from "./home";
+import Footer from "./Footer";
 
 const App = (props) => {
   const [currentUser, setCurrentUser] = useState(undefined);
@@ -52,6 +53,11 @@ const App = (props) => {
         </Route> */}
         <Route exact path="/players/:id" component={PlayerShow} />
         <Route exact path="/events/:id" component={EventShow} />
+        {/* <Route exact path="/players/:id" component={PlayerShow} /> */}
+
+        {/* <Route exact path="/events/:id">
+          <EventShow user={currentUser}/>
+        </Route> */}
         <Route exact path="/users/new" component={RegistrationForm} />
         <Route exact path="/user-sessions/new" component={SignInForm} />
       </Switch>

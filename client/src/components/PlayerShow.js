@@ -14,6 +14,7 @@ const PlayerShow = props => {
 
   //make a fetch user method and set the response to state
   const fetchPlayer = async () => {
+    console.log("In fetch player")
     try {
       const response = await fetch(`/api/v1/users/${playerId}`);
       const body = await response.json();
@@ -31,10 +32,14 @@ const PlayerShow = props => {
 
   //return the jsx of user info
   return(
-    <div>
-      <h3>{player.playerName}</h3>
-      <img src={player.profileImg}/>
-      <h5>{player.team}</h5>
+    <div className="player-show">
+      <h3 className="center-text">{player.playerName}</h3>
+      <div className="img-container-player">
+        <img className="center-img" src={player.profileImg}/>
+      </div>
+      <div className="player-show-info">
+        <h5>Team:      {player.team}</h5>
+      </div>
     </div>
   )
 }
