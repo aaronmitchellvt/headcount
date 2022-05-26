@@ -9,7 +9,9 @@ eventsRouter.get("/", async (req, res) => {
 })
 
 eventsRouter.get("/:id", async (req, res) => {
-  const event = await Event.query().findById(req.params.id)
+  const eventId = req.params.id
+  const event = await Event.query().findById(eventId)
+  
   return res.status(200).json({ event })
 })
 

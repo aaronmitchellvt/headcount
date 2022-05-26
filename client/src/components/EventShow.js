@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import JoinEventForm from "./JoinEventForm.js";
 import { Link } from "react-router-dom";
 import JoinedPlayerTile from "./JoinedPlayerTile.js";
+import getCurrentUser from "../services/getCurrentUser";
+
 
 const EventShow = (props) => {
   const [currentEvent, setCurrentEvent] = useState({
@@ -9,43 +11,89 @@ const EventShow = (props) => {
     date: "",
     hours: "",
     menu: "",
-    forecastDate: "Too early to know!",
+    forecastDate: "",
     comments: "",
   });
 
   const [eventPlayers, setEventPlayers] = useState([]);
   const [showForm, setShowForm] = useState(true);
-  const [temp, setTemp] = useState("Too early to know!")
-  // const [eventDay, setEventDay] = useState("Too early to know!")
+  const [temp, setTemp] = useState(null);
+  const [currentUser, setCurrentUser] = useState(undefined);
+  const [hasCurrentUser, setHasCurrentUser] = useState(false)
+
+
+  if(currentUser){
+    console.log("current user id", currentUser.id)
+  }
 
   const eventId = props.match.params.id;
-  // if(props.user){
-  //   console.log("User from app : ", props.user.email)
-  // }
 
-
-  // const getEventDay = () => {
-  //   setEventDay(currentEvent.forecastDate)
-  // }
-  // setEventDay(currentEvent.forecastDate)
   const fetchEvent = async () => {
     try {
       const response = await fetch(`/api/v1/events/${eventId}`);
       const body = await response.json();
-      setCurrentEvent(body.event);
+      const event = body.event;
+      const forecastDate = event.forecastDate;
+      const forecast = await fetchWeatherForecast(forecastDate);
+      const forecastString = forecast ? `${forecast.temperature}F - ${forecast.shortForecast}` : "Too early to tell!"
+      setCurrentEvent(event);
+      setTemp(forecastString)
+      let user = null
+      try {
+        user = await getCurrentUser()
+      } catch(err) {
+      }
+      setCurrentUser(user)
+      const foundLoggedInUser = await getEventPlayers(user)
+      setHasCurrentUser(foundLoggedInUser)
     } catch (error) {
       console.log(error);
     }
   };
 
-  // const getEventPlayers = async () => {
-  //   try {
-  //     const response = await fetch(`/api/v1/event-signups/${eventId}`);
-  //     const body = await response.json();
-  //   } catch (error) {
-  //     console.log(error)
-  //   }
-  // };
+  // if(eventPlayers && currentUser) {
+  //   eventPlayers.forEach((player) => {
+  //     if(player.id === currentUser.id) {
+  //       setShowForm(false)
+  //     }
+  //   })
+  // }
+
+  const getEventPlayers = async (loggedInUser) => {
+    try {
+      const response = await fetch(`/api/v1/event-signups/${eventId}`);
+      const body = await response.json();
+      console.log("post body response: ", body.event.players);
+      let foundLoggedIn = false
+      const playerJoins = body.event.players.map((player) => {
+        if(player.id === loggedInUser.id) {
+          foundLoggedIn = true
+        }
+        const playerJoinInfo = {
+          id: player.id,
+          profileImg: player.profileImg,
+          playerName: player.playerName,
+          team: player.team,
+          estimatedArrivalTime: "eventually",
+        };
+        return playerJoinInfo
+      })
+      setEventPlayers(playerJoins)
+      return foundLoggedIn
+      // const playerJoinInfo = {
+      //   id: player.id,
+      //   profileImg: body.user.profileImg,
+      //   playerName: body.user.playerName,
+      //   team: body.user.team,
+      //   estimatedArrivalTime: body.newEventSignUp.estimatedArrivalTime,
+      // };
+      // setEventPlayers(eventPlayers.concat(playerJoinInfo));
+      // return body.players
+    } catch (error) {
+      console.log(error)
+      return false
+    }
+  };
 
   const postNewJoin = async (newJoinData) => {
     try {
@@ -74,68 +122,86 @@ const EventShow = (props) => {
     }
   };
 
+  const fetchWeatherForecast = async (eventDay) => {
+    const response = await fetch(`/api/v1/weather`);
+    const parsedForecast = await response.json();
+    const periods = parsedForecast.forecastData.properties.periods;
 
-  const eventDay = "2022-05-26"
-  // console.log("Event Day: ", eventDay)
-  const fetchWeatherForecast = async () => {
-    const response  = await fetch(`/api/v1/weather`)
-    const parsedForecast = await response.json()
-    const periods = parsedForecast.forecastData.properties.periods
-
-    periods.forEach((period) => {
-      const trimmedDate = period.startTime.slice(0,10)
-      // console.log("trimmed date: ", trimmedDate)
-      // console.log("Temperature", period.temperature)
-      // console.log("Period", period)
-      if(trimmedDate === eventDay && period.isDaytime) {
-        console.log("MATCH!!!")
-        setTemp(`${period.temperature}F - ${period.shortForecast}`)
-        // weatherForecast = period.temperature
+    const foundForecast = periods.find((period) => {
+      const trimmedDate = period.startTime.slice(0, 10);
+      if (trimmedDate === eventDay && period.isDaytime) {
+        console.log("MATCH!!!");
+        return true;
+      } else {
+        return false
       }
-      })
-  }
+    });
+    console.log("Found forecast: ", foundForecast)
+    return foundForecast
+  };
 
   useEffect(() => {
-    fetchWeatherForecast(),
     fetchEvent()
   }, []);
 
-  // let eventDay = currentEvent.weather
-  // console.log("Forecast outside of fetch :", weatherForecast)
-
-  console.log("Event Day: ", currentEvent.forecastDate)
-  console.log("State of event players", eventPlayers);
 
   const playersArray = eventPlayers.map((player) => {
     return <JoinedPlayerTile player={player} />;
   });
 
+  console.log("has current user: ", hasCurrentUser)
   return (
-    <section className="event-show-section">
-      <div className="event-card-container">
-        <div className="event-details-left">
-          <h2>{currentEvent.title}</h2>
-          <h3>{currentEvent.date}</h3>
+    <>
+      <div className="event-jumbotron">
+        <h1>{currentEvent.title}</h1>
+      </div>
+      <section className="event-show-container">
+        <div className="event">
+          <h2>{currentEvent.date}</h2>
           <h3>{currentEvent.hours}</h3>
-          <h4>Snack Shot Menu: {currentEvent.menu}</h4>
           <h4>Weather: {temp}</h4>
-          <h4>Comments: {currentEvent.comments}</h4>
         </div>
 
-        <div className="event-details-right">
-          <div className="join-event-form-container">
-            {showForm && <JoinEventForm eventId={eventId} postNewJoin={postNewJoin} />}
-          </div>
+        <div className="event tall">
+          {showForm && !hasCurrentUser && <JoinEventForm eventId={eventId} postNewJoin={postNewJoin} />}
           <h4 className="font-theme">These players will be there</h4>
-          <div className="joined-players-list">
-            {playersArray}
-          </div>
+          <div players-container>{playersArray}</div>
         </div>
-      </div>
-      <div className="event-layout">
-        <img src={currentEvent.layoutImg} />
-      </div>
-    </section>
+        <div className="event center-text">
+          <h3>Prices</h3>
+          <h4>BYOP - (Bring Your Own Paint)</h4>
+          <h4>Entry: $25 or free when you purchase paint</h4>
+          <h4>Paint: $60 per case or $55 for season pass holders</h4>
+        </div>
+      </section>
+      <img className="event-img" src={currentEvent.layoutImg} />
+    </>
+
+    // <section className="event-show-section">
+    //   <div className="event-card-container">
+    //     <div className="event-details-left">
+    //       <h2>{currentEvent.title}</h2>
+    //       <h3>{currentEvent.date}</h3>
+    //       <h3>{currentEvent.hours}</h3>
+    //       <h4>Snack Shot Menu: {currentEvent.menu}</h4>
+    //       <h4>Weather: {temp}</h4>
+    //       <h4>Comments: {currentEvent.comments}</h4>
+    //     </div>
+
+    //     <div className="event-details-right">
+    //       <div className="join-event-form-container">
+    //         {showForm && <JoinEventForm eventId={eventId} postNewJoin={postNewJoin} />}
+    //       </div>
+    //       <h4 className="font-theme">These players will be there</h4>
+    //       <div className="joined-players-list">
+    //         {playersArray}
+    //       </div>
+    //     </div>
+    //   </div>
+    //   <div className="event-layout">
+    //     <img src={currentEvent.layoutImg} />
+    //   </div>
+    // </section>
   );
 };
 
@@ -150,24 +216,24 @@ export default EventShow;
 //   <img src={player.profileImg} />
 // </li>
 
-  // const getWeatherForecast = async () => {
-  //   const url = "https://api.weather.gov/gridpoints/GYX/32,21/forecast"
-  //   try {
-  //     const response = await fetch( url, {
-  //       method: "GET"
-  //     });
-  //     const body = await response.json();
-  //     const periods = body.properties.periods
-      // periods.forEach((period) => {
-      //   const trimmedDate = period.startTime.slice(0,10)
-      //   if(trimmedDate === eventDay && period.isDaytime) {
-      //     eventDayWeather = period.detailedForecast
-      //   }
-      //   // console.log("Start time: " + trimmedDate + " is day time: " + period.isDaytime)
-      // })
-  //       console.log("forecast for event day: ", eventDayWeather)
-  //     // console.log("Forecast Periods: ", periods);
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // }
+// const getWeatherForecast = async () => {
+//   const url = "https://api.weather.gov/gridpoints/GYX/32,21/forecast"
+//   try {
+//     const response = await fetch( url, {
+//       method: "GET"
+//     });
+//     const body = await response.json();
+//     const periods = body.properties.periods
+// periods.forEach((period) => {
+//   const trimmedDate = period.startTime.slice(0,10)
+//   if(trimmedDate === eventDay && period.isDaytime) {
+//     eventDayWeather = period.detailedForecast
+//   }
+//   // console.log("Start time: " + trimmedDate + " is day time: " + period.isDaytime)
+// })
+//       console.log("forecast for event day: ", eventDayWeather)
+//     // console.log("Forecast Periods: ", periods);
+//   } catch (error) {
+//     console.log(error);
+//   }
+// }
