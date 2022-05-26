@@ -22,7 +22,8 @@
   "version": "0.0.1",
   "name": "headcount-server",
   "engines": {
-    "node": "^14.19"
+    "node": "^14.19",
+    "yarn": "1.22.10"
   },
   "devDependencies": {
     "@babel/core": "^7.17.10",
