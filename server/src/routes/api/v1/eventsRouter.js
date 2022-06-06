@@ -1,7 +1,28 @@
 import express from "express"
-import { Event } from "../../../models/index.js"
+import { Event, EventSignUp } from "../../../models/index.js"
 import uploadImage from "../../../services/uploadImage.js"
 const eventsRouter = new express.Router()
+
+
+eventsRouter.delete("/:id", async (req, res) => {
+  try {
+    // const event = await Event.query().findById(req.params.id)
+    const eventSignUps = await EventSignUp.query().select('id', 'userId', 'eventId')
+      .where('eventId', '=', req.params.id)
+
+    console.log("deleting event signups ...")
+    eventSignUps.forEach( async (eventSignUp) => {
+      console.log("=> ", eventSignUp)
+      await EventSignUp.query().deleteById(eventSignUp.id)
+    })
+
+    await Event.query().deleteById(req.params.id)
+    console.log("Will delete id: ", req.params.id)
+    res.status(200).json({message: "Event was successfully deleted"})
+  } catch (error) {
+    console.log(error)
+  }
+})
 
 eventsRouter.get("/", async (req, res) => {
   const events = await Event.query()
