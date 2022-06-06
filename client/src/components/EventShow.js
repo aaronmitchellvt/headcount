@@ -74,7 +74,7 @@ const EventShow = (props) => {
           profileImg: player.profileImg,
           playerName: player.playerName,
           team: player.team,
-          estimatedArrivalTime: "eventually",
+          estimatedArrivalTime: player.estimatedArrivalTime,
         };
         return playerJoinInfo
       })
@@ -140,13 +140,34 @@ const EventShow = (props) => {
     return foundForecast
   };
 
+  
+  const eventCheckout  = async (eventId) => {
+    console.log("Delete event called")
+    try {
+      const response = await fetch(`/api/v1/event-signups/${eventId}`, {
+        method: "DELETE",
+        headers: new Headers({
+          "Content-Type": "application/json",
+        })
+      })
+      const respBody = await response.json()
+      const filteredPlayers = eventPlayers.filter((player) => player.id !== currentUser.id)
+      // setErrors([])
+      setEventPlayers(filteredPlayers)
+      // setEventPlayers([])
+      // await getEventPlayers(loggedInUser)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   useEffect(() => {
     fetchEvent()
   }, []);
 
 
   const playersArray = eventPlayers.map((player) => {
-    return <JoinedPlayerTile player={player} />;
+    return <JoinedPlayerTile currentUser={currentUser} player={player} eventId={eventId} eventCheckout={eventCheckout}/>;
   });
 
   console.log("has current user: ", hasCurrentUser)

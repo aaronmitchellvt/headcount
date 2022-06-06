@@ -3,6 +3,26 @@ import { Link } from "react-router-dom"
 
 const EventTile = props => {
   const eventId = props.id
+
+  const deleteEvent = props.deleteEventFunc
+  const handleDelete = () => {
+    deleteEvent(eventId)
+  }
+
+  const handleEdit = () => {
+    console.log("edit clicked")
+  }
+
+  const isAdmin = true
+  let adminFeatures = []
+  if(isAdmin) {
+    adminFeatures = [
+      <button type="button" className="button sign-button delete-button" onClick={handleDelete}>
+        Delete
+      </button>
+    ]
+  }
+
   return(
     <div className="event-tile-container">
       <div className="event-tile">
@@ -18,6 +38,7 @@ const EventTile = props => {
       <div className="event-tile-container-text">
         <h5><Link to ={`/events/${eventId}`}>Join Event</Link></h5>
         <h5>{props.event.hours}</h5>
+        {/* {adminFeatures} */}
       </div>
       {/* <img src={props.event.layoutImg}/> */}
     </div>

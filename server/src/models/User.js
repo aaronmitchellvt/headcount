@@ -41,19 +41,6 @@ class User extends uniqueFunc(Model) {
       }
     }
   }
-  // return {
-  //   clubs: {
-  //     relation: Model.ManyToManyRelation,
-  //     modelClass: Club,
-  //     join: {
-  //       from: "students.id",
-  //       through: {
-  //         from: "signups.studentId",
-  //         to: "signups.clubId"
-  //       },
-  //       to: "clubs.id"
-  //     }
-  //   }
 
   static get jsonSchema() {
     return {

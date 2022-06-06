@@ -12,7 +12,8 @@ const EventList = (props) => {
     try {
       const response = await fetch(`/api/v1/events`)
       const body = await response.json()
-      setEvents(events.concat(body.events))
+      // setEvents(events.concat(body.events))
+      setEvents(body.events)
     } catch (error) {
       console.log(error)
     }
@@ -57,8 +58,30 @@ const EventList = (props) => {
     }
   };
 
+  const deleteEvent = async (eventId) => {
+    console.log("Delete event called")
+    try {
+      const response = await fetch(`/api/v1/events/${eventId}`, {
+        method: "DELETE",
+        headers: new Headers({
+          "Content-Type": "application/json",
+        })
+        // do a filter on eventlist
+        // set event list to the filtered event list
+      })
+      setEvents([])
+      await getEvents()
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   const eventTiles = events.map((event) => {
-    return <EventTile key={event.id} event={event} id={event.id}/>;
+    return <EventTile 
+      key={event.id} 
+      event={event} 
+      id={event.id} 
+      deleteEventFunc={deleteEvent} />;
   });
   return (
     <div className="event-list-container">
