@@ -51,14 +51,6 @@ const EventShow = (props) => {
     }
   };
 
-  // if(eventPlayers && currentUser) {
-  //   eventPlayers.forEach((player) => {
-  //     if(player.id === currentUser.id) {
-  //       setShowForm(false)
-  //     }
-  //   })
-  // }
-
   const getEventPlayers = async (loggedInUser) => {
     try {
       const response = await fetch(`/api/v1/event-signups/${eventId}`);
@@ -80,15 +72,6 @@ const EventShow = (props) => {
       })
       setEventPlayers(playerJoins)
       return foundLoggedIn
-      // const playerJoinInfo = {
-      //   id: player.id,
-      //   profileImg: body.user.profileImg,
-      //   playerName: body.user.playerName,
-      //   team: body.user.team,
-      //   estimatedArrivalTime: body.newEventSignUp.estimatedArrivalTime,
-      // };
-      // setEventPlayers(eventPlayers.concat(playerJoinInfo));
-      // return body.players
     } catch (error) {
       console.log(error)
       return false
@@ -140,7 +123,6 @@ const EventShow = (props) => {
     return foundForecast
   };
 
-  
   const eventCheckout  = async (eventId) => {
     console.log("Delete event called")
     try {
@@ -258,3 +240,13 @@ export default EventShow;
 //     console.log(error);
 //   }
 // }
+
+      // const playerJoinInfo = {
+      //   id: player.id,
+      //   profileImg: body.user.profileImg,
+      //   playerName: body.user.playerName,
+      //   team: body.user.team,
+      //   estimatedArrivalTime: body.newEventSignUp.estimatedArrivalTime,
+      // };
+      // setEventPlayers(eventPlayers.concat(playerJoinInfo));
+      // return body.players

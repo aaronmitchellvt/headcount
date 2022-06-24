@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from "react";
 import EventTile from "./EventTile";
 import NewEventForm from "./NewEventForm";
-import Dropzone from "react-dropzone"
-
 
 const EventList = (props) => {
   const [events, setEvents] = useState([]);
@@ -66,8 +64,7 @@ const EventList = (props) => {
         headers: new Headers({
           "Content-Type": "application/json",
         })
-        // do a filter on eventlist
-        // set event list to the filtered event list
+
       })
       setEvents([])
       await getEvents()

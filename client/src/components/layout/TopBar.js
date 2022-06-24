@@ -31,9 +31,9 @@ const TopBar = ({ user }) => {
           <li>
             <Link to="/events">Events</Link>
           </li>
-          <Link to="/new" className="button">
+          {/* <Link to="/new" className="button">
             New Event
-          </Link>
+          </Link> */}
         </ul>
       </div>
       <div className="top-bar-right">
