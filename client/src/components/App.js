@@ -41,7 +41,7 @@ const App = (props) => {
       <Switch>
 
         <Route exact path="/" component={Home} />
-        <Route exact path="/new" component={NewEventForm} />
+        {/* <Route exact path="/new" component={NewEventForm} /> */}
         <Route exact path="/events" >
           <EventList user={currentUser} adminFlag={adminFlag} />
         </Route>
