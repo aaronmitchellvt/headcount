@@ -172,9 +172,10 @@ const EventShow = (props) => {
         </div>
         <div className="event center-text">
           <h3>Prices</h3>
-          <h4>BYOP - (Bring Your Own Paint)</h4>
-          <h4>Entry: $25 or free when you purchase paint</h4>
+          {/* <h4>BYOP - (Bring Your Own Paint)</h4> */}
+          {/* <h4>Entry: $25 or free when you purchase paint</h4> */}
           <h4>Paint: $60 per case or $55 for season pass holders</h4>
+          <h4>{currentEvent.comments}</h4>
         </div>
       </section>
       <img className="event-img" src={currentEvent.layoutImg} />
