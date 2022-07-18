@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { hot } from "react-hot-loader/root";
+import 'bootstrap/dist/css/bootstrap.min.css';
 import { Link } from "react-router-dom"
 
 import getCurrentUser from "../services/getCurrentUser";

@@ -36,7 +36,8 @@ eventsRouter.get("/:id", async (req, res) => {
   return res.status(200).json({ event })
 })
 
-eventsRouter.post("/", uploadImage.single("layoutImg"), async (req, res) => {
+// DAX eventsRouter.post("/", uploadImage.single("layoutImg"), async (req, res) => {
+eventsRouter.post("/", async (req, res) => {
   console.log("Body: ", req.body)
   try {
     const { body } = req
