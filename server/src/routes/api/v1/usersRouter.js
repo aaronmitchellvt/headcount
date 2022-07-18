@@ -11,7 +11,9 @@ usersRouter.get("/:id", async (req, res) => {
   return res.status(200).json({ player })
 })
 
-usersRouter.post("/", uploadImage.single("profileImg"), async (req, res) => {
+// DAX usersRouter.post("/", uploadImage.single("profileImg"), async (req, res) => {
+
+usersRouter.post("/", async (req, res) => {
   console.log(req.body)
   const { email, password, playerName, team, passwordConfirmation } = req.body;
   try {
