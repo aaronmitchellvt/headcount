@@ -49,7 +49,7 @@ const NewEventForm = ({ postEvent }) => {
   };
 
   return (
-    <div>
+    <div className="bootstrap-event-form">
       <h1>New Event Form</h1>
       <Form onSubmit={handleSubmit}>
         <Form.Group className="mb-3" controlId="formBasicTitle">

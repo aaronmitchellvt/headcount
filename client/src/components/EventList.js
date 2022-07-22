@@ -79,21 +79,6 @@ const EventList = (props) => {
       <div className="event-jumbotron">
         <h1>Upcoming Events</h1>
       </div>
-
-      {/* <Container>
-        {eventTiles.map(eventTile => {
-          return <Row><Col xs={6} sm={10}>{eventTile}</Col> <Col xs={6} sm={10}>{eventTile}</Col> <Col xs={6} sm={10}>{eventTile}</Col></Row> ;
-        })}
-        </Container> */}
-
-      {/* <Row gutter={40}>
-        {eventTiles.map((event) => (
-          <Col md>
-            {event}
-          </Col>
-        ))}
-      </Row> */}
-
       <Container>
         <Row>
           {eventTiles.map((event) => {
@@ -101,10 +86,7 @@ const EventList = (props) => {
           })}
         </Row>
       </Container>
-
-      <div className="event-list-form">
         {props.adminFlag && <NewEventForm postEvent={postEvent} />}
-      </div>
     </div>
   );
 };
