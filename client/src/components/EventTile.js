@@ -39,7 +39,7 @@ const EventTile = props => {
     //     {adminFeatures}
     //   </div>
     // </div>
-    <Card className="bootstrap-tile">
+    <Card className="bootstrap-tile card">
     <Card.Img variant="top" src="https://i.imgur.com/2ZppiGB.jpg" width="100" height="180"/>
     <Card.Body>
       <Card.Title>{props.event.title}</Card.Title>
