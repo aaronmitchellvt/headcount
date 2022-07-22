@@ -55,6 +55,7 @@ const RegistrationForm = () => {
 
   const onSubmit = async (event) => {
     event.preventDefault();
+    console.log("on submit called")
     const newUserData = new FormData()
     newUserData.append("profileImg", userPayload.profileImg)
     newUserData.append("playerName", userPayload.playerName)
@@ -79,27 +80,6 @@ const RegistrationForm = () => {
     } catch (error) {
       console.error(`Error in post event Fetch: ${error.message}`)
     }
-    // validateInput(userPayload);
-    // try {
-    //   if (Object.keys(errors).length === 0) {
-    //     const response = await fetch("/api/v1/users", {
-    //       method: "post",
-    //       body: JSON.stringify(userPayload),
-    //       headers: new Headers({
-    //         "Content-Type": "application/json",
-    //       }),
-    //     });
-    //     if (!response.ok) {
-    //       const errorMessage = `${response.status} (${response.statusText})`;
-    //       const error = new Error(errorMessage);
-    //       throw error;
-    //     }
-    //     const userData = await response.json();
-    //     setShouldRedirect(true);
-    //   }
-    // } catch (err) {
-    //   console.error(`Error in fetch: ${err.message}`);
-    // }
   };
 
 

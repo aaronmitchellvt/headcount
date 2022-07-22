@@ -11,11 +11,10 @@ usersRouter.get("/:id", async (req, res) => {
   return res.status(200).json({ player })
 })
 
-// DAX usersRouter.post("/", uploadImage.single("profileImg"), async (req, res) => {
-
-usersRouter.post("/", async (req, res) => {
-  console.log(req.body)
-  const { email, password, playerName, team, passwordConfirmation } = req.body;
+usersRouter.post("/", uploadImage.single("profileImg"), async (req, res) => {
+// usersRouter.post("/", async (req, res) => {
+  console.log("Req body email: ", req.body)
+  let { email, password, playerName, team, passwordConfirmation } = req.body;
   try {
     const persistedUser = await User.query().insertAndFetch({ email, password, playerName, team, profileImg:req.file.location})
     return req.login(persistedUser, () => {
