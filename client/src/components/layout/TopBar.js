@@ -8,9 +8,11 @@ import NavDropdown from 'react-bootstrap/NavDropdown';
 
 const TopBar = ({ user }) => {
   const unauthenticatedListItems = [
-    <Nav.Link href="/user-sessions/new">Sign In</Nav.Link>,
-    <Nav.Link href="/users/new">Sign Up</Nav.Link>
+    <Nav.Link className="justify-content-end" href="/user-sessions/new">Sign In</Nav.Link>,
+    <Nav.Link href="/users/new">Make Account</Nav.Link>
   ];
+  const signInLink = <Nav.Link className="text-light justify-content-end" href="/user-sessions/new">Sign In</Nav.Link>
+  const signUpLink = <Nav.Link className="text-light" href="/users/new">Make Account</Nav.Link>
 
   const dropDown = 
     <NavDropdown className="text-light bootstrap-navs" title={"Sign In"} id="nav-dropdown">
@@ -28,10 +30,16 @@ const TopBar = ({ user }) => {
       <Container>
         <Navbar.Brand className="text-light">Headcount</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
-        <Navbar.Collapse id="basic-navbar-nav">
+        <Navbar.Collapse className="justify-content-end" id="basic-navbar-nav">
           <Nav className="me-auto">
             <Nav.Link href="/events" className="text-light">Events</Nav.Link>
-        <Nav.Item className="justify-content-end">{user ? authenticatedListItems : dropDown}</Nav.Item>
+
+      <Nav className="justify-content-end">
+        <Nav.Item className="justify-content-end">{user ? authenticatedListItems : signInLink}</Nav.Item>
+        <Nav.Item className="justify-content-end">{user ? authenticatedListItems : signUpLink}</Nav.Item>
+      </Nav>
+
+
 
 {/* 
             <NavDropdown title="Dropdown" id="basic-nav-dropdown">
