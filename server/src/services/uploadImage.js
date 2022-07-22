@@ -13,8 +13,6 @@ AWS.config.update({
 
 const s3 = new AWS.S3()
 
-// const uploadImage = () => {}
-// DAX
 const uploadImage = multer({
   storage: multerS3({
     s3: s3,
