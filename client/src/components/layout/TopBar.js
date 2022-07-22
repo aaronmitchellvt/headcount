@@ -1,45 +1,55 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import SignOutButton from "../authentication/SignOutButton";
+import Container from 'react-bootstrap/Container';
+import Nav from 'react-bootstrap/Nav';
+import Navbar from 'react-bootstrap/Navbar';
+import NavDropdown from 'react-bootstrap/NavDropdown';
 
 const TopBar = ({ user }) => {
   const unauthenticatedListItems = [
-    <li key="sign-in">
-      <Link to="/user-sessions/new">Sign In</Link>
-    </li>,
-    <li key="sign-up">
-      <Link to="/users/new" className="button">
-        Sign Up
-      </Link>
-    </li>,
+    <Nav.Link href="/user-sessions/new">Sign In</Nav.Link>,
+    <Nav.Link href="/users/new">Sign Up</Nav.Link>
   ];
 
+  const dropDown = 
+    <NavDropdown className="text-light bootstrap-navs" title={"Sign In"} id="nav-dropdown">
+      <NavDropdown.Item href="/user-sessions/new">Sign In</NavDropdown.Item>
+      <NavDropdown.Item href="/users/new">Sign Up</NavDropdown.Item>
+      </NavDropdown>
+
   const authenticatedListItems = [
-    <li key="sign-out">
       <SignOutButton />
-    </li>,
   ];
 
   return (
-    <div className="top-bar">
-      <div className="top-bar-left">
-        <ul className="menu">
-          <li className="menu-text">Head Count</li>
-          <li>
-            <Link to="/">Home</Link>
-          </li>
-          <li>
-            <Link to="/events">Events</Link>
-          </li>
-          {/* <Link to="/new" className="button">
-            New Event
-          </Link> */}
-        </ul>
-      </div>
-      <div className="top-bar-right">
-        <ul className="menu">{user ? authenticatedListItems : unauthenticatedListItems}</ul>
-      </div>
-    </div>
+
+      <Navbar bg="dark" expand="lg" className="bootstrap-navs text-light">
+      <Container>
+        <Navbar.Brand className="text-light">Headcount</Navbar.Brand>
+        <Navbar.Toggle aria-controls="basic-navbar-nav" />
+        <Navbar.Collapse id="basic-navbar-nav">
+          <Nav className="me-auto">
+            <Nav.Link href="/" className="text-light">Events</Nav.Link>
+        <Nav.Item className="justify-content-end">{user ? authenticatedListItems : dropDown}</Nav.Item>
+
+{/* 
+            <NavDropdown title="Dropdown" id="basic-nav-dropdown">
+              <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
+              <NavDropdown.Item href="#action/3.2">
+                Another action
+              </NavDropdown.Item>
+              <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
+              <NavDropdown.Divider />
+              <NavDropdown.Item href="#action/3.4">
+                Separated link
+              </NavDropdown.Item>
+            </NavDropdown> */}
+
+          </Nav>
+        </Navbar.Collapse>
+      </Container>
+    </Navbar>
   );
 };
 
