@@ -1,11 +1,15 @@
 import React, { useState } from "react";
 import { Redirect } from "react-router-dom";
+import Button from "react-bootstrap/Button";
+import { Nav } from "react-bootstrap";
+
 
 const SignOutButton = () => {
   const [shouldRedirect, setShouldRedirect] = useState(false);
 
   const signOut = async (event) => {
     event.preventDefault()
+    console.log("sign out hit")
     try {
         const response = await fetch("/api/v1/user-sessions", {
         method: "delete",
@@ -31,9 +35,11 @@ const SignOutButton = () => {
   }
 
   return (
-    <button type="button" className="button" onClick={signOut}>
-      Sign Out
-    </button>
+    // <Button type="button" className="button" onClick={signOut}>
+    //   Sign Out
+    // </Button>
+
+    <Nav.Link onClick={signOut}>Signout</Nav.Link>
   );
 };
 

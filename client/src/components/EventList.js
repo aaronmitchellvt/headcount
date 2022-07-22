@@ -86,13 +86,21 @@ const EventList = (props) => {
         })}
         </Container> */}
 
-      <Row gutter={40}>
+      {/* <Row gutter={40}>
         {eventTiles.map((event) => (
-          <Col sm>
+          <Col md>
             {event}
           </Col>
         ))}
-      </Row>
+      </Row> */}
+
+      <Container>
+        <Row>
+          {eventTiles.map((event) => {
+            return <Col sm={12} md={6} lg={4}>{event}</Col>
+          })}
+        </Row>
+      </Container>
 
       <div className="event-list-form">
         {props.adminFlag && <NewEventForm postEvent={postEvent} />}
