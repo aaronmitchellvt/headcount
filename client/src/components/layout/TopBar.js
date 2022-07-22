@@ -24,13 +24,13 @@ const TopBar = ({ user }) => {
 
   return (
 
-      <Navbar bg="dark" expand="lg" className="bootstrap-navs text-light">
+      <Navbar variant="dark" bg="dark" expand="lg" className="bootstrap-navs text-light">
       <Container>
         <Navbar.Brand className="text-light">Headcount</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
-            <Nav.Link href="/" className="text-light">Events</Nav.Link>
+            <Nav.Link href="/events" className="text-light">Events</Nav.Link>
         <Nav.Item className="justify-content-end">{user ? authenticatedListItems : dropDown}</Nav.Item>
 
 {/* 
