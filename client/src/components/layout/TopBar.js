@@ -43,7 +43,7 @@ const TopBar = ({ user }) => {
 
   const loggedInDropDown = (
     <NavDropdown className="text-light bootstrap-navs" title={playerName} id="nav-dropdown">
-      <NavDropdown.Item><Link to={`/players/${playerId}`}>Profile</Link></NavDropdown.Item>
+      <NavDropdown.Item><Link to={`/players/edit/${playerId}`}>Profile</Link></NavDropdown.Item>
       <NavDropdown.Item ><SignOutButton/></NavDropdown.Item>
     </NavDropdown>
   );
