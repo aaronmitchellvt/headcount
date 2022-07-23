@@ -24,6 +24,31 @@ usersRouter.post("/", uploadImage.single("profileImg"), async (req, res) => {
     return res.status(500).json({ errors: error })
   }
 });
+
+usersRouter.patch("/:id", async (req, res) => {
+  console.log("Hit the back  end")
+  console.log("Req Body: ", req.body)
+  const userObjToEdit = await User.query().findById(req.params.id)
+
+  const userId = userObjToEdit.id
+  console.log("User id to edit: ", userId)
+  console.log("User to edit: ", userObjToEdit)
+
+  const userData = {
+    team: req.body.team,
+    email: req.body.email,
+  }
+
+  if (userId === req.user.id) {
+    console.log("successful id match")
+    const updatedUser = await userObjToEdit.$query().updateAndFetch(userData)
+    res.status(201).json({ updatedUser })
+  } else {
+    console.log("Error in backend with Patch")
+  }
+})
+
+
   // try {
   //   const persistedUser = await User.query().insertAndFetch({ email, password, team, playerName });
   //   return req.login(persistedUser, () => {

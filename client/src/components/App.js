@@ -13,6 +13,7 @@ import NewEventForm from "./NewEventForm";
 import EventList from "./EventList";
 import EventShow from "./EventShow";
 import PlayerShow from "./PlayerShow";
+import PlayerPage from "./PlayerPage";
 import Home from "./Home";
 // import Footer from "./Footer";
 
@@ -39,6 +40,7 @@ const App = (props) => {
   return (
     <Router>
       <TopBar user={currentUser} />
+
       <Switch>
 
         <Route exact path="/" component={Home} />
@@ -51,6 +53,7 @@ const App = (props) => {
           <EventShow user={currentUser} />
         </Route> */}
         <Route exact path="/players/:id" component={PlayerShow} />
+        <Route exact path="/players/edit/:id" component={PlayerPage}/>
         <Route exact path="/events/:id" component={EventShow} />
         {/* <Route exact path="/players/:id" component={PlayerShow} /> */}
 
