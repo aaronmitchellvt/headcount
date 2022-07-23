@@ -1,6 +1,4 @@
 import React, { useState } from "react";
-import { Redirect } from "react-router-dom";
-import Button from "react-bootstrap/Button";
 import { Nav } from "react-bootstrap";
 
 
@@ -35,11 +33,7 @@ const SignOutButton = () => {
   }
 
   return (
-    // <Button type="button" className="button" onClick={signOut}>
-    //   Sign Out
-    // </Button>
-
-    <Nav.Link onClick={signOut}>Signout</Nav.Link>
+    <Nav.Link className="text-dark" onClick={signOut}>Signout</Nav.Link>
   );
 };
 
