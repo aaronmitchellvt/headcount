@@ -15,30 +15,17 @@ const EventTile = props => {
     console.log("edit clicked")
   }
 
-  const isAdmin = true
+  const isAdmin = props.adminFlag
   let adminFeatures = []
   if(isAdmin) {
     adminFeatures = [
-      <button type="button" className="button sign-button delete-button" onClick={handleDelete}>
+      <Button type="button" variant="danger" className="delete-button-event-tile"  onClick={handleDelete}>
         Delete
-      </button>
+      </Button>
     ]
   }
 
   return(
-    // <div className="event-tile-container">
-    //   <div className="event-tile">
-    //   <h2>{props.event.title}</h2>
-    //   <div className="tile-date">
-    //     <h5>{props.event.date}</h5>
-    //   </div>
-    //   </div>
-    //   <div className="event-tile-container-text">
-    //     <h5><Link to ={`/events/${eventId}`}>Join Event</Link></h5>
-    //     <h5>{props.event.hours}</h5>
-    //     {adminFeatures}
-    //   </div>
-    // </div>
     <Card className="bootstrap-tile card">
     <Card.Img variant="top" src="https://i.imgur.com/2ZppiGB.jpg" width="100" height="180"/>
     <Card.Body>
@@ -47,6 +34,7 @@ const EventTile = props => {
       {props.event.date}
       </Card.Text>
       <Button variant="outline-primary"><Link to ={`/events/${eventId}`}>Join Event</Link></Button>
+      {adminFeatures}
     </Card.Body>
   </Card>
   )

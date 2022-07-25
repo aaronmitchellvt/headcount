@@ -72,7 +72,7 @@ const EventList = (props) => {
   };
 
   const eventTiles = events.map((event) => {
-    return <EventTile key={event.id} event={event} id={event.id} deleteEventFunc={deleteEvent} />;
+    return <EventTile key={event.id} event={event} id={event.id} adminFlag={props.adminFlag} deleteEventFunc={deleteEvent} />;
   });
   return (
     <div className="event-list-container">
