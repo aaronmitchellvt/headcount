@@ -6,19 +6,13 @@ import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Card from "react-bootstrap/Card";
+import { Redirect } from "react-router";
+
 
 const PlayerPage = (props) => {
   console.log("hey from player page");
 
-  // const [currentUser, setCurrentUser] = useState(undefined);
-  // const fetchCurrentUser = async () => {
-  //   try {
-  //     const user = await getCurrentUser();
-  //     setCurrentUser(user);
-  //   } catch (err) {
-  //     setCurrentUser(null);
-  //   }
-  // };
+  const [shouldRedirect, setShouldRedirect] = useState(false);
   const [player, setPlayer] = useState({
     profileImg: {},
     playerName: "",
@@ -46,10 +40,9 @@ const PlayerPage = (props) => {
     fetchPlayer();
   }, []);
 
-  let playerName = "Player";
-  // if (currentUser) {
-  //   playerName = currentUser.playerName;
-  // }
+  if (shouldRedirect) {
+    location.href = "/events";
+  }
 
   const onInputChange = (event) => {
     setUserPayLoad({
@@ -77,6 +70,8 @@ const PlayerPage = (props) => {
         console.log("Error in editInfo");
       } else {
         console.log("successful patch!");
+        //redirect
+        setShouldRedirect(true)
       }
     } catch (error) {
       console.log("Error: ", error);
