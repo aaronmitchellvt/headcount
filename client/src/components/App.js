@@ -15,6 +15,7 @@ import EventShow from "./EventShow";
 import PlayerShow from "./PlayerShow";
 import PlayerPage from "./PlayerPage";
 import Home from "./Home";
+import EventTile from "./EventTile";
 // import Footer from "./Footer";
 
 const App = (props) => {
@@ -54,7 +55,12 @@ const App = (props) => {
         </Route> */}
         <Route exact path="/players/:id" component={PlayerShow} />
         <Route exact path="/players/edit/:id" component={PlayerPage}/>
+
         <Route exact path="/events/:id" component={EventShow} />
+
+        {/* <Route exact path>
+          <EventTile adminFlag={adminFlag} />
+        </Route> */}
         {/* <Route exact path="/players/:id" component={PlayerShow} /> */}
 
         {/* <Route exact path="/events/:id">
