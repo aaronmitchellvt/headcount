@@ -1,19 +1,15 @@
 import React, { useState, useEffect } from "react";
 import EventTile from "./EventTile";
 import NewEventForm from "./NewEventForm";
-import Container from "react-bootstrap/Container";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
+import {Container, Row, Col} from "react-bootstrap"
 
 const EventList = (props) => {
   const [events, setEvents] = useState([]);
-  const [showForm, setShowForm] = useState(false);
 
   const getEvents = async () => {
     try {
       const response = await fetch(`/api/v1/events`);
       const body = await response.json();
-      // setEvents(events.concat(body.events))
       setEvents(body.events);
     } catch (error) {
       console.log(error);

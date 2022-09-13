@@ -1,7 +1,6 @@
 import React from "react"
 import { Link } from "react-router-dom"
-import Button from 'react-bootstrap/Button';
-import Card from 'react-bootstrap/Card';
+import {Button, Card} from 'react-bootstrap';
 
 const EventTile = props => {
   const eventId = props.id
@@ -26,7 +25,7 @@ const EventTile = props => {
   }
 
   return(
-    <Card className="bootstrap-tile card">
+    <Card key={props.event.key} className="bootstrap-tile card">
     <Card.Img variant="top" src="https://i.imgur.com/2ZppiGB.jpg" width="100" height="180"/>
     <Card.Body>
       <Card.Title>{props.event.title}</Card.Title>
