@@ -6,7 +6,7 @@ module.exports = {
   content: ["./src/components/**/*.js"],
   purge: {
     enabled: true,
-    content: ['./src/components/**/*.{js,jsx}'],
+    content: ["./src/components/**/*.js","./public/index.html"],
   },
   theme: {
     colors: {
