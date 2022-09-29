@@ -1,12 +1,11 @@
 // const tailwindcss = require("tailwindcss");
 /** @type {import('tailwindcss').Config} */
-// import head from './src/components/authentication/'
 
 module.exports = {
   content: ["./src/components/**/*.js"],
   purge: {
     enabled: true,
-    content: ['./src/components/**/*.{js,jsx}'],
+    content: ["./src/components/**/*.js",'./public/index.html'],
   },
   theme: {
     colors: {
