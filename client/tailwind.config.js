@@ -3,6 +3,7 @@
 // import head from './src/components/authentication/'
 
 module.exports = {
+  node: "jit",
   content: ["./src/components/**/*.js"],
   purge: {
     enabled: true,
