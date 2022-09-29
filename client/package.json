@@ -1,7 +1,8 @@
 {
   "scripts": {
-    "build": "./node_modules/.bin/webpack",
-    "dev": "./node_modules/.bin/webpack-dev-server"
+    "watch": "webpack --watch --progress",
+    "dev": "yarn watch:css && ./node_modules/.bin/webpack-dev-server",
+    "tailwind": "npx tailwindcss --input ./src/assets/tailwind.css --output ./src/assets/tailwind.css --watch"
   },
   "license": "UNLICENSED",
   "private": true,
@@ -28,20 +29,26 @@
     "@types/react-router-dom": "^5.3.3",
     "babel-loader": "~8.1",
     "css-loader": "^5.0.0",
+    "autoprefixer": "^10.4.7",
     "file-loader": "^6.2.0",
     "foundation-sites": "^6.7.4",
     "html-webpack-plugin": "^5.2.0",
     "mini-css-extract-plugin": "^0.9.0",
     "node-sass": "^4.14.1",
     "prop-types": "~15.7",
+    "postcss": "^8.4.13",
+    "postcss-import": "^14.1.0",
+    "postcss-loader": "^6.2.1",
     "react": "17",
     "react-dom": "~16.13",
     "react-dropzone": "^11.3.1",
     "react-hot-loader": "^4.12.21",
+    "react-icons": "^4.4.0",
     "react-router-dom": "5.2",
     "redbox-react": "~1.6",
     "sass-loader": "^8.0.2",
     "style-loader": "^1.2.1",
+    "tailwindcss": "^3.0.24",
     "webpack": "^5.3.2",
     "webpack-cli": "^4.1.0",
     "webpack-hot-middleware": "^2.25.0"
