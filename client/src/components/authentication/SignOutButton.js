@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Nav } from "react-bootstrap";
+// import { Nav } from "react-bootstrap";
 
 
 const SignOutButton = () => {
@@ -7,7 +7,6 @@ const SignOutButton = () => {
 
   const signOut = async (event) => {
     event.preventDefault()
-    console.log("sign out hit")
     try {
         const response = await fetch("/api/v1/user-sessions", {
         method: "delete",
@@ -33,7 +32,7 @@ const SignOutButton = () => {
   }
 
   return (
-    <Nav.Link className="text-dark" onClick={signOut}>Signout</Nav.Link>
+    <a className="py-2 px-2 bg-gray-800 text-white rounded shadow no-underline  " onClick={signOut}>Signout</a>
   );
 };
 

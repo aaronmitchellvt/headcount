@@ -5,7 +5,8 @@ const PlayerShow = props => {
   //state of user
   const [player, setPlayer] = useState({
     profileImg: {},
-    playerName: "",
+    firstName: "",
+    lastName: "",
     team: ""
   })
 
@@ -32,13 +33,15 @@ const PlayerShow = props => {
 
   //return the jsx of user info
   return(
-    <div className="player-show">
-      <h3 className="center-text">{player.playerName}</h3>
-      <div className="img-container-player">
-        <img className="center-img" src={player.profileImg}/>
-      </div>
-      <div className="player-show-info">
-        <h5>Team:      {player.team}</h5>
+    <div className="mt-8 justify-center mx-auto">
+      <h2 className="text-center">{player.firstName} {player.lastName}</h2>
+      {/* <div className="object-center"> */}
+        <br />
+        <img className="object-center rounded-lg border-2 mx-auto" width='275vh' height='275vh' src={player.profileImg}/>
+      {/* </div> */}
+      <br />
+      <div>
+        <h5 className="text-center">Team: {player.team}</h5>
       </div>
     </div>
   )

@@ -14,9 +14,9 @@ usersRouter.get("/:id", async (req, res) => {
 usersRouter.post("/", uploadImage.single("profileImg"), async (req, res) => {
 // usersRouter.post("/", async (req, res) => {
   console.log("Req body email: ", req.body)
-  let { email, password, playerName, team, passwordConfirmation } = req.body;
+  let { email, password, firstName, lastName, team, passwordConfirmation } = req.body;
   try {
-    const persistedUser = await User.query().insertAndFetch({ email, password, playerName, team, profileImg:req.file.location})
+    const persistedUser = await User.query().insertAndFetch({ email, password, firstName, lastName, team, profileImg:req.file.location})
     return req.login(persistedUser, () => {
       return res.status(201).json({ user: persistedUser });
     });

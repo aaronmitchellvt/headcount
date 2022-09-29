@@ -4,7 +4,6 @@ import { Link } from "react-router-dom";
 import JoinedPlayerTile from "./JoinedPlayerTile.js";
 import getCurrentUser from "../services/getCurrentUser";
 
-
 const EventShow = (props) => {
   const [currentEvent, setCurrentEvent] = useState({
     title: "",
@@ -19,11 +18,10 @@ const EventShow = (props) => {
   const [showForm, setShowForm] = useState(true);
   const [temp, setTemp] = useState(null);
   const [currentUser, setCurrentUser] = useState(undefined);
-  const [hasCurrentUser, setHasCurrentUser] = useState(false)
+  const [hasCurrentUser, setHasCurrentUser] = useState(false);
 
-
-  if(currentUser){
-    console.log("current user id", currentUser.id)
+  if (currentUser) {
+    console.log("current user id", currentUser.id);
   }
 
   const eventId = props.match.params.id;
@@ -35,17 +33,18 @@ const EventShow = (props) => {
       const event = body.event;
       const forecastDate = event.forecastDate;
       const forecast = await fetchWeatherForecast(forecastDate);
-      const forecastString = forecast ? `${forecast.temperature}F - ${forecast.shortForecast}` : "Too early to tell!"
+      const forecastString = forecast
+        ? `${forecast.temperature}F - ${forecast.shortForecast}`
+        : "Too early to tell!";
       setCurrentEvent(event);
-      setTemp(forecastString)
-      let user = null
+      setTemp(forecastString);
+      let user = null;
       try {
-        user = await getCurrentUser()
-      } catch(err) {
-      }
-      setCurrentUser(user)
-      const foundLoggedInUser = await getEventPlayers(user)
-      setHasCurrentUser(foundLoggedInUser)
+        user = await getCurrentUser();
+      } catch (err) {}
+      setCurrentUser(user);
+      const foundLoggedInUser = await getEventPlayers(user);
+      setHasCurrentUser(foundLoggedInUser);
     } catch (error) {
       console.log(error);
     }
@@ -56,25 +55,26 @@ const EventShow = (props) => {
       const response = await fetch(`/api/v1/event-signups/${eventId}`);
       const body = await response.json();
       console.log("post body response: ", body.event.players);
-      let foundLoggedIn = false
+      let foundLoggedIn = false;
       const playerJoins = body.event.players.map((player) => {
-        if(player.id === loggedInUser.id) {
-          foundLoggedIn = true
+        if (player.id === loggedInUser.id) {
+          foundLoggedIn = true;
         }
         const playerJoinInfo = {
           id: player.id,
           profileImg: player.profileImg,
-          playerName: player.playerName,
+          firstName: player.firstName,
+          lastName: player.lastName,
           team: player.team,
           estimatedArrivalTime: player.estimatedArrivalTime,
         };
-        return playerJoinInfo
-      })
-      setEventPlayers(playerJoins)
-      return foundLoggedIn
+        return playerJoinInfo;
+      });
+      setEventPlayers(playerJoins);
+      return foundLoggedIn;
     } catch (error) {
-      console.log(error)
-      return false
+      console.log(error);
+      return false;
     }
   };
 
@@ -95,7 +95,8 @@ const EventShow = (props) => {
       const playerJoinInfo = {
         id: body.user.id,
         profileImg: body.user.profileImg,
-        playerName: body.user.playerName,
+        firstName: body.user.firstName,
+        lastName: body.user.lastName,
         team: body.user.team,
         estimatedArrivalTime: body.newEventSignUp.estimatedArrivalTime,
       };
@@ -116,69 +117,76 @@ const EventShow = (props) => {
         console.log("MATCH!!!");
         return true;
       } else {
-        return false
+        return false;
       }
     });
-    console.log("Found forecast: ", foundForecast)
-    return foundForecast
+    console.log("Found forecast: ", foundForecast);
+    return foundForecast;
   };
 
-  const eventCheckout  = async (eventId) => {
-    console.log("Delete event called")
+  const eventCheckout = async (eventId) => {
+    console.log("Delete event called");
     try {
       const response = await fetch(`/api/v1/event-signups/${eventId}`, {
         method: "DELETE",
         headers: new Headers({
           "Content-Type": "application/json",
-        })
-      })
-      const respBody = await response.json()
-      const filteredPlayers = eventPlayers.filter((player) => player.id !== currentUser.id)
+        }),
+      });
+      const respBody = await response.json();
+      const filteredPlayers = eventPlayers.filter((player) => player.id !== currentUser.id);
       // setErrors([])
-      setEventPlayers(filteredPlayers)
+      setEventPlayers(filteredPlayers);
       // setEventPlayers([])
       // await getEventPlayers(loggedInUser)
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
-  }
+  };
 
   useEffect(() => {
-    fetchEvent()
+    fetchEvent();
   }, []);
 
-
   const playersArray = eventPlayers.map((player) => {
-    return <JoinedPlayerTile currentUser={currentUser} player={player} eventId={eventId} eventCheckout={eventCheckout}/>;
+    return (
+      <JoinedPlayerTile
+        currentUser={currentUser}
+        player={player}
+        eventId={eventId}
+        eventCheckout={eventCheckout}
+      />
+    );
   });
 
-  console.log("has current user: ", hasCurrentUser)
+  console.log("has current user: ", hasCurrentUser);
   return (
     <>
-      <div className="event-jumbotron">
-        <h1>{currentEvent.title}</h1>
+      <div className="bg-red-700">
+        <h2 className="text-center text-white h-14 pt-2 pb-2">{currentEvent.title}</h2>
       </div>
-      <section className="event-show-container">
-        <div className="event">
-          <h2>{currentEvent.date}</h2>
-          <h3>{currentEvent.hours}</h3>
-          <h4>Weather: {temp}</h4>
+
+      <div className="flex flex-wrap">
+        <div className="p-4 sm:w-full md:w-1/2 lg:w-1/2">
+          {/* <h2 className="text-center">Join Event</h2> */}
+          <h2 className="text-center">These Players Will Be There</h2>
+
+          <div className="p-2 h-5/6 overflow-auto">
+            {playersArray}
+          </div>
+          <div className="mt-4 pb-4 p-2">
+            {showForm && <JoinEventForm eventId={eventId} postNewJoin={postNewJoin} />}
+          </div>
+
+          <div className="mt-6 pt-2 pb-2 pl-2">
+            <h3>Weather: {temp}</h3>
+          </div>
         </div>
 
-        <div className="event tall">
-          {showForm && !hasCurrentUser && <JoinEventForm eventId={eventId} postNewJoin={postNewJoin} />}
-          <h4 className="font-theme">These players will be there</h4>
-          <div players-container>{playersArray}</div>
+        <div className="p-4 sm:w-full md:w-1/2 lg:w-1/2">
+          <img src={currentEvent.layoutImg} />
         </div>
-        <div className="event center-text">
-          <h3>Prices</h3>
-          {/* <h4>BYOP - (Bring Your Own Paint)</h4> */}
-          {/* <h4>Entry: $25 or free when you purchase paint</h4> */}
-          <h4>Paint: $60 per case or $55 for season pass holders</h4>
-          <h4>{currentEvent.comments}</h4>
-        </div>
-      </section>
-      <img className="event-img" src={currentEvent.layoutImg} />
+      </div>
     </>
 
     // <section className="event-show-section">
@@ -210,44 +218,25 @@ const EventShow = (props) => {
 };
 
 export default EventShow;
+{
+  /* <section className="event-show-container">
+<div className="event">
+  <h2>{currentEvent.date}</h2>
+  <h3>{currentEvent.hours}</h3>
+  <h4>Weather: {temp}</h4>
+</div>
 
-// <li key={player.id}>
-//   <p>
-//     <Link to={`/players/${player.id}`}>
-//       {player.playerName} of {player.team} - {player.estimatedArrivalTime}
-//     </Link>
-//   </p>
-//   <img src={player.profileImg} />
-// </li>
+<div className="event tall">
+  {showForm && !hasCurrentUser && <JoinEventForm eventId={eventId} postNewJoin={postNewJoin} />}
+  <h4 className="font-theme">These players will be there</h4>
+  <div players-container>{playersArray}</div>
+</div>
+<div className="event center-text">
+  <h3>Prices</h3>
 
-// const getWeatherForecast = async () => {
-//   const url = "https://api.weather.gov/gridpoints/GYX/32,21/forecast"
-//   try {
-//     const response = await fetch( url, {
-//       method: "GET"
-//     });
-//     const body = await response.json();
-//     const periods = body.properties.periods
-// periods.forEach((period) => {
-//   const trimmedDate = period.startTime.slice(0,10)
-//   if(trimmedDate === eventDay && period.isDaytime) {
-//     eventDayWeather = period.detailedForecast
-//   }
-//   // console.log("Start time: " + trimmedDate + " is day time: " + period.isDaytime)
-// })
-//       console.log("forecast for event day: ", eventDayWeather)
-//     // console.log("Forecast Periods: ", periods);
-//   } catch (error) {
-//     console.log(error);
-//   }
-// }
-
-      // const playerJoinInfo = {
-      //   id: player.id,
-      //   profileImg: body.user.profileImg,
-      //   playerName: body.user.playerName,
-      //   team: body.user.team,
-      //   estimatedArrivalTime: body.newEventSignUp.estimatedArrivalTime,
-      // };
-      // setEventPlayers(eventPlayers.concat(playerJoinInfo));
-      // return body.players
+  <h4>Paint: $60 per case or $55 for season pass holders</h4>
+  <h4>{currentEvent.comments}</h4>
+</div>
+</section>
+<img className="event-img" src={currentEvent.layoutImg} /> */
+}

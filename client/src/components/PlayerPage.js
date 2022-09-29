@@ -5,6 +5,7 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
+import SignOutButton from "../components/authentication/SignOutButton";
 import Card from "react-bootstrap/Card";
 import { Redirect } from "react-router";
 
@@ -15,7 +16,8 @@ const PlayerPage = (props) => {
   const [shouldRedirect, setShouldRedirect] = useState(false);
   const [player, setPlayer] = useState({
     profileImg: {},
-    playerName: "",
+    firstName: "",
+    lastName: "",
     team: "",
   });
   const [userPayload, setUserPayLoad] = useState({
@@ -79,50 +81,66 @@ const PlayerPage = (props) => {
   };
 
   return (
-    <Container className="top-marg">
-      <Row>
-        <Col sm={12} md={6} lg={6}>
-          <Card style={{ width: "18rem" }}>
-            <Card.Body>
-              <Card.Title className="center-text">{player.playerName}</Card.Title>
-            </Card.Body>
-            <Card.Img variant="top" src={player.profileImg} />
-            <Card.Body>
-              <Card.Title>Team - {player.team}</Card.Title>
-            </Card.Body>
-          </Card>
-        </Col>
+    <div className="mt-8 justify-center mx-auto">
+    <h2 className="text-center">{player.firstName} {player.lastName}</h2>
 
-        <Col sm={12} md={6} lg={6}>
-          <Form onSubmit={handleSubmit}>
-            <h1 className="center-text">Edit Details</h1>
-            <Form.Group className="mb-3" controlId="formBasicTeam">
-              <Form.Label>Team</Form.Label>
-              <Form.Control
-                type="text"
-                value={userPayload.team}
-                name="team"
-                onChange={onInputChange}
-              />
-            </Form.Group>
-
-            <Form.Group className="mb-3" controlId="formBasicAddress">
-              <Form.Label>Email</Form.Label>
-              <Form.Control
-                type="text"
-                value={userPayload.email}
-                name="email"
-                onChange={onInputChange}
-              />
-            </Form.Group>
-
-            <Button variant="primary" type="submit">
-              Edit Profile
-            </Button>
-          </Form>
-        </Col>
-      </Row>
-    </Container>
+    {/* <div className="object-center"> */}
+      <br />
+      <img className="object-center rounded-lg border-2 mx-auto" width='275vh' height='275vh' src={player.profileImg}/>
+    {/* </div> */}
+    <br />
+    <div>
+      <h5 className="text-center">Team: {player.team}</h5>
+    </div>
+    <div className=" flex justify-center">
+    <SignOutButton />
+    </div>
+  </div>
   );
 };
 export default PlayerPage;
+{/* <Container className="top-marg">
+<SignOutButton />
+  <Row>
+    <Col sm={12} md={6} lg={6}>
+      <Card style={{ width: "18rem" }}>
+        <Card.Body>
+          <Card.Title className="center-text">{player.firstName} {player.lastName}</Card.Title>
+        </Card.Body>
+        <Card.Img variant="top" src={player.profileImg} />
+        <Card.Body>
+          <Card.Title>Team - {player.team}</Card.Title>
+        </Card.Body>
+      </Card>
+    </Col>
+
+    <Col sm={12} md={6} lg={6}>
+      <Form onSubmit={handleSubmit}>
+        <h1 className="center-text">Edit Details</h1>
+        <Form.Group className="mb-3" controlId="formBasicTeam">
+          <Form.Label>Team</Form.Label>
+          <Form.Control
+            type="text"
+            value={userPayload.team}
+            name="team"
+            onChange={onInputChange}
+          />
+        </Form.Group>
+
+        <Form.Group className="mb-3" controlId="formBasicAddress">
+          <Form.Label>Email</Form.Label>
+          <Form.Control
+            type="text"
+            value={userPayload.email}
+            name="email"
+            onChange={onInputChange}
+          />
+        </Form.Group>
+
+        <Button variant="primary" type="submit">
+          Edit Profile
+        </Button>
+      </Form>
+    </Col>
+  </Row>
+</Container> */}

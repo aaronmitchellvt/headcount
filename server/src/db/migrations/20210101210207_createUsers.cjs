@@ -16,7 +16,8 @@ exports.up = async (knex) => {
     return knex.schema.createTable(tableName, (table) => {
       table.bigIncrements("id");
       table.string("profileImg")
-      table.string("playerName").notNullable()
+      table.string("firstName").notNullable()
+      table.string("lastName").notNullable()
       table.string("team")
       table.string("email").notNullable().unique();
       table.string("cryptedPassword").notNullable();
