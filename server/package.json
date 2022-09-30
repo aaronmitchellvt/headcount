@@ -2,7 +2,8 @@
   "scripts": {
     "start": "node src/app.js",
     "clean": "rm -rf ./public/dist",
-    "dev": "yarn run clean && nodemon src/app.js",
+    "dev": "yarn run clean && src/app.js",
+    "dev2": "yarn run clean && nodemon src/app.js",
     "dev:debug": "nodemon --inspect-brk src/app.js",
     "console": "node --experimental-repl-await ./src/console.js",
     "migrate:latest": "knex --knexfile ./knexfile.cjs migrate:latest",
