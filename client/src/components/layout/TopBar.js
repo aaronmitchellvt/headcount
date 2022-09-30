@@ -35,7 +35,7 @@ const TopBar = ({ user }) => {
   
   let playerName = "Profile"
   let playerId
-  if(user) {
+  if(user && user.playerName) {
     playerId = user.id
     const stringArray = user.playerName.split(" ")
     playerName = stringArray[0]
