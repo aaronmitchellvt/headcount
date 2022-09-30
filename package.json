@@ -9,8 +9,6 @@
   "scripts": {
     "build:client": "yarn workspace headcount-client build",
     "dev": "yarn workspace headcount-server dev",
-    "build:css": "postcss client/src/assets/tailwind.css -o client/src/assets/main.css",
-    "watch:css": "postcss client/src/assets/tailwind.css -o client/src/assets/main.css",
     "dev:debug": "yarn workspace headcount-server dev:debug",
     "heroku-postbuild": "yarn workspace headcount-client build",
     "tailwind": "yarn workspace headcount-client tailwind",
@@ -26,12 +24,5 @@
     "bootstrap": "^5.1.3",
     "react-bootstrap": "^2.4.0",
     "reactstrap": "^9.1.1"
-  },
-  "devDependencies": {
-    "autoprefixer": "^10.4.12",
-    "postcss": "^8.4.16",
-    "postcss-cli": "^10.0.0",
-    "postcss-loader": "^7.0.0",
-    "tailwindcss": "^3.1.8"
   }
 }
