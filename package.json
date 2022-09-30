@@ -9,8 +9,6 @@
   "scripts": {
     "build:client": "yarn workspace headcount-client build",
     "dev": "yarn workspace headcount-server dev",
-    "build:css": "postcss client/src/assets/tailwind.css -o client/src/assets/main.css",
-    "watch:css": "postcss client/src/assets/tailwind.css -o client/src/assets/main.css",
     "dev:debug": "yarn workspace headcount-server dev:debug",
     "heroku-postbuild": "yarn workspace headcount-client build",
     "tailwind": "yarn workspace headcount-client tailwind",
