@@ -1,6 +1,5 @@
 {
   "scripts": {
-    "build": "./node_modules/.bin/webpack",
     "watch": "webpack --watch --progress",
     "dev": "yarn watch:css && ./node_modules/.bin/webpack-dev-server",
     "tailwind": "npx tailwindcss --input ./src/assets/tailwind.css --output ./src/assets/tailwind.css --watch"
