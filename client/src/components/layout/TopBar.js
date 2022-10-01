@@ -44,67 +44,9 @@ const TopBar = ({ user }) => {
       </li>
     </ul>
   );
-  const authenticatedButtons = [
-    // <div className="bg-gray-300 rounded mr-4">
-    //   <Link to={`/players/edit/${playerId}`}>
-    //   <svg
-    //     xmlns="http://www.w3.org/2000/svg"
-    //     fill="none"
-    //     viewBox="0 0 24 24"
-    //     strokeWidth={1.5}
-    //     stroke="currentColor"
-    //     className="w-10 h-10 py-1 px-1"
-    //   >
-    //     <path
-    //       strokeLinecap="round"
-    //       strokeLinejoin="round"
-    //       d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z"
-    //     />
-    //   </svg>
-    //   </Link>
-    // </div>,
-    <div><Link to={`/players/edit/${playerId}`}><img className = "rounded-full border-2" width="50vh" height="50vh" src={playerImg}/></Link> </div>
-  ];
-
-  // const unauthenticatedListItems = [
-  //   <Nav.Link classNameName="justify-content-end" href="/user-sessions/new">
-  //     Sign In
-  //   </Nav.Link>,
-  //   <Nav.Link href="/users/new">Make Account</Nav.Link>,
-  // ];
-
-  // const signInLink = (
-  //   <Nav.Link classNameName="text-light justify-content-end" href="/user-sessions/new">
-  //     Sign In
-  //   </Nav.Link>
-  // );
-
-  // const signUpLink = (
-  //   <Nav.Link classNameName="text-light" href="/users/new">
-  //     Make Account
-  //   </Nav.Link>
-  // );
-
-  // const dropDown = (
-  //   <NavDropdown classNameName="text-light bootstrap-navs" title={"Sign In"} id="nav-dropdown">
-  //     <NavDropdown.Item href="/user-sessions/new">Sign In</NavDropdown.Item>
-  //     <NavDropdown.Item href="/users/new">Sign Up</NavDropdown.Item>
-  //   </NavDropdown>
-  // );
 
 
-
-  // const loggedInDropDown = (
-  //   <NavDropdown classNameName="text-light bootstrap-navs" title={playerName} id="nav-dropdown">
-  //     <NavDropdown.Item>
-  //       <Link to={`/players/edit/${playerId}`}>Profile</Link>
-  //     </NavDropdown.Item>
-  //     <NavDropdown.Item>
-  //       <SignOutButton />
-  //     </NavDropdown.Item>
-  //   </NavDropdown>
-  // );
-
+  const authenticatedButtons = <div><Link to={`/players/edit/${playerId}`}><img className = "rounded-full border-2" width="50vh" height="50vh" src={playerImg}/></Link> </div>
   // const authenticatedListItems = [<SignOutButton />];
 
   const [nav, setNav] = useState(false);
