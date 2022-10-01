@@ -8,6 +8,14 @@ import NavDropdown from "react-bootstrap/NavDropdown";
 
 const TopBar = ({ user }) => {
 
+  let playerName = "Profile"
+  let id
+  if(user && user.playerName) {
+    id = user.id
+    const stringArray = user.playerName.split(" ")
+    playerName = stringArray[0]
+  }
+
   console.log("User: ", user)
   const unauthenticatedListItems = [
     <Nav.Link className="justify-content-end" href="/user-sessions/new">
@@ -33,17 +41,9 @@ const TopBar = ({ user }) => {
     </NavDropdown>
   );
   
-  let playerName = "Profile"
-  let playerId
-  if(user && user.playerName) {
-    playerId = user.id
-    const stringArray = user.playerName.split(" ")
-    playerName = stringArray[0]
-  }
-
   const loggedInDropDown = (
     <NavDropdown className="text-light bootstrap-navs" title={playerName} id="nav-dropdown">
-      <NavDropdown.Item><Link to={`/players/edit/${playerId}`}>Profile</Link></NavDropdown.Item>
+      <NavDropdown.Item><Link to={`/players/edit/${id}}`}>Profile</Link></NavDropdown.Item>
       <NavDropdown.Item ><SignOutButton/></NavDropdown.Item>
     </NavDropdown>
   );
