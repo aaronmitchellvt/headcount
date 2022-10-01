@@ -2,9 +2,9 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import SignOutButton from "../authentication/SignOutButton";
 import tailwind from "../../assets/tailwind.css";
-import { FaBars, FaTimes, FaGithub, FaLinkedin } from "react-icons/fa";
-import { BsFillPersonLinesFill } from "react-icons/bs";
-import { HiOutlineMail } from "react-icons/hi";
+// import { FaBars, FaTimes, FaGithub, FaLinkedin } from "react-icons/fa";
+// import { BsFillPersonLinesFill } from "react-icons/bs";
+// import { HiOutlineMail } from "react-icons/hi";
 
 const TopBar = ({ user }) => {
   console.log("User: ", user);
@@ -109,7 +109,7 @@ const TopBar = ({ user }) => {
 
   const [nav, setNav] = useState(false);
   const handleClick = () => setNav(!nav);
-  const [navbarOpen, setNavbarOpen] = React.useState(false);
+  // const [navbarOpen, setNavbarOpen] = React.useState(false);
 
   return (
     <nav className="bg-gray-900 shadow">
