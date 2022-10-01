@@ -2,7 +2,7 @@
 const tailwindcss = require("tailwindcss");
 
 module.exports = {
-  content: ["./src/components/**/*.js"],
+  content: ["./src/components/**/*.js", "./public/*html"],
   theme: {
     screens: {
       xs: "400px",
