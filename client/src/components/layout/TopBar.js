@@ -4,12 +4,7 @@ import SignOutButton from "../authentication/SignOutButton";
 import tailwind from "../../assets/tailwind.css";
 
 const TopBar = ({ user }) => {
-  let playerId;
-  let playerImg
-  if (user) {
-    playerId = user.id;
-    playerImg = user.profileImg
-  }
+
   const unauthenticatedButtons = (
     <ul className="list-none flex items-center mt-3">
       <li
@@ -36,7 +31,14 @@ const TopBar = ({ user }) => {
       </li>
     </ul>
   );
-  const authenticatedButtons = <div><Link to={`/players/edit/${playerId}`}><img className = "rounded-full border-2" width="50vh" height="50vh" src={playerImg}/></Link> </div>
+
+  let id
+  let pic
+  if(user) {
+    id = user.id
+    pic=user.profileImg
+  }
+  const authenticatedButtons = <div><Link to={`/players/edit/${id}`}><img className = "rounded-full border-2" width="50vh" height="50vh" src={pic}/></Link> </div>
   // const authenticatedListItems = [<SignOutButton />];
   return (
     <nav className="bg-gray-900 shadow">
