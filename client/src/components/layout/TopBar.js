@@ -12,7 +12,7 @@ const TopBar = ({ user }) => {
         // className="py-2 px-2.5 bg-gray-800 text-white mr-4 rounded shadow"
       >
         <Link
-          className="py-1 px-1 bg-gray-800 text-white rounded shadow mr-2 hover:bg-color-black no-underline"
+          className="py-2 px-2 bg-gray-800 text-white rounded shadow mr-2 hover:bg-color-black no-underline"
           to="/user-sessions/new"
         >
           Sign In
@@ -24,7 +24,7 @@ const TopBar = ({ user }) => {
       >
         <Link
           to="/users/new"
-          className="py-1 px-1 bg-gray-800 text-white rounded shadow ml-2 hover:bg-color-black no-underline"
+          className="py-2 px-2 bg-gray-800 text-white rounded shadow ml-2 hover:bg-color-black no-underline"
         >
           Sign Up
         </Link>
