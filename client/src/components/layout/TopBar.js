@@ -5,6 +5,7 @@ import tailwind from "../../assets/tailwind.css";
 
 const TopBar = ({ user }) => {
 
+
   const unauthenticatedButtons = (
     <ul className="list-none flex items-center mt-3">
       <li
@@ -40,6 +41,7 @@ const TopBar = ({ user }) => {
   }
   const authenticatedButtons = <div><Link to={`/players/edit/${id}`}><img className = "rounded-full border-2" width="50vh" height="50vh" src={pic}/></Link> </div>
   // const authenticatedListItems = [<SignOutButton />];
+
   return (
     <nav className="bg-gray-900 shadow">
       <div className="px-8 mx-auto">
