@@ -2,9 +2,6 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import SignOutButton from "../authentication/SignOutButton";
 import tailwind from "../../assets/tailwind.css";
-// import { FaBars, FaTimes, FaGithub, FaLinkedin } from "react-icons/fa";
-// import { BsFillPersonLinesFill } from "react-icons/bs";
-// import { HiOutlineMail } from "react-icons/hi";
 
 const TopBar = ({ user }) => {
   console.log("User: ", user);
@@ -14,8 +11,6 @@ const TopBar = ({ user }) => {
   if (user) {
     playerId = user.id;
     playerImg = user.profileImg
-    // const stringArray = user.playerName.split(" ");
-    // playerName = stringArray[0];
   }
 
   const unauthenticatedButtons = (
@@ -51,7 +46,6 @@ const TopBar = ({ user }) => {
 
   const [nav, setNav] = useState(false);
   const handleClick = () => setNav(!nav);
-  // const [navbarOpen, setNavbarOpen] = React.useState(false);
 
   return (
     <nav className="bg-gray-900 shadow">
@@ -75,61 +69,6 @@ const TopBar = ({ user }) => {
       </div>
     </nav>
   );
-
-  {
-    /* <nav classNameName="bg-gray-100">
-        <div classNameName="px-8 mx-auto border border-red-400">
-        <div classNameName="flex justify">
-            <div>Logo</div>
-            <div>Primary Nav</div>
-            <div>Secondary Nav</div>
-          </div>
-        </div>
-      </nav> */
-  }
-
-  {
-    /* <Navbar variant="dark" bg="dark" expand="lg" classNameName="bootstrap-navs text-light">
-      <Container>
-        <Navbar.Brand classNameName="text-light">Headcount</Navbar.Brand>
-        <Navbar.Toggle aria-controls="basic-navbar-nav" />
-        <Navbar.Collapse classNameName="justify-content-end" id="basic-navbar-nav">
-          <Nav classNameName="me-auto">
-            <Nav.Link href="/events" classNameName="text-light">
-              Events
-            </Nav.Link>
-
-            <Nav classNameName="justify-content-end">
-              <Nav.Item classNameName="justify-content-end">
-                {user ? loggedInDropDown : signUpLink}
-              </Nav.Item>
-              <Nav.Item classNameName="justify-content-end">
-                {user ? "" : signInLink}
-              </Nav.Item>
-            </Nav> */
-  }
-
-  {
-    /* 
-            <NavDropdown title="Dropdown" id="basic-nav-dropdown">
-              <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
-              <NavDropdown.Item href="#action/3.2">
-                Another action
-              </NavDropdown.Item>
-              <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
-              <NavDropdown.Divider />
-              <NavDropdown.Item href="#action/3.4">
-                Separated link
-              </NavDropdown.Item>
-            </NavDropdown> */
-  }
-
-  {
-    /* </Nav>
-        </Navbar.Collapse>
-      </Container>
-    </Navbar> */
-  }
 };
 
 export default TopBar;
