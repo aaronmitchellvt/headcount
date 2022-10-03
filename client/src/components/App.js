@@ -1,12 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { hot } from "react-hot-loader/root";
-import "../assets/tailwind.css";
-// import "../assets/tailwind.css";
+import "../assets/style/tailwind.css";
 import 'bootstrap/dist/css/bootstrap.min.css';
-// import "../assets/style/";
 import getCurrentUser from "../services/getCurrentUser";
-// import "../assets/scss/main.scss";
 import RegistrationForm from "./registration/RegistrationForm";
 import SignInForm from "./authentication/SignInForm";
 import TopBar from "./layout/TopBar";

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import SignOutButton from "../authentication/SignOutButton";
-import tailwind from "../../assets/tailwind.css";
+import tailwind from "../../assets/style/tailwind.css";
 
 const TopBar = ({ user }) => {
 
