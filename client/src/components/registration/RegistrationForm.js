@@ -1,63 +1,69 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import FormError from "../layout/FormError";
 import config from "../../config";
 import { Link } from "react-router-dom";
 import Dropzone from "react-dropzone";
 
 const RegistrationForm = () => {
-  const [userPayload, setUserPayload] = useState({
+  const initialValues = {
     profileImg: {},
     firstName: "",
     lastName: "",
     team: "",
     email: "",
     password: "",
-    passwordConfirmation: "",
-  });
-  const [file, setFile] = useState([]);
+  };
 
+  const [userPayload, setUserPayload] = useState(initialValues);
   const [errors, setErrors] = useState({});
-
+  const [file, setFile] = useState([]);
   const [shouldRedirect, setShouldRedirect] = useState(false);
 
-  const validateInput = (payload) => {
-    setErrors({});
-    const { email, password, passwordConfirmation } = payload;
-    const emailRegexp = config.validation.email.regexp;
-    let newErrors = {};
-    if (!email.match(emailRegexp)) {
-      newErrors = {
-        ...newErrors,
-        email: "is invalid",
-      };
-    }
+  // const validateInput = (payload) => {
+  //   setErrors({});
+  //   const { firstName, lastName, email, password, team } = payload;
+  //   const emailRegexp = config.validation.email.regexp;
+  //   let newErrors = {};
+  //   if (firstName.trim() == "") {
+  //     newErrors = {
+  //       ...newErrors,
+  //       firstName: "is required",
+  //     };
+  //   }
 
-    if (password.trim() == "") {
-      newErrors = {
-        ...newErrors,
-        password: "is required",
-      };
-    }
+  //   if (lastName.trim() == "") {
+  //     newErrors = {
+  //       ...newErrors,
+  //       lastName: "is required",
+  //     };
+  //   }
 
-    if (passwordConfirmation.trim() === "") {
-      newErrors = {
-        ...newErrors,
-        passwordConfirmation: "is required",
-      };
-    } else {
-      if (passwordConfirmation !== password) {
-        newErrors = {
-          ...newErrors,
-          passwordConfirmation: "does not match password",
-        };
-      }
-    }
+  //   if (!email.match(emailRegexp)) {
+  //     newErrors = {
+  //       ...newErrors,
+  //       email: "is invalid",
+  //     };
+  //   }
 
-    setErrors(newErrors);
-  };
+  //   if (password.trim() == "") {
+  //     newErrors = {
+  //       ...newErrors,
+  //       password: "is required",
+  //     };
+  //   }
+
+  //   if (team === "") {
+  //     newErrors = {
+  //       ...newErrors,
+  //       team: "is required",
+  //     };
+  //   }
+  //   setErrors(newErrors);
+  // };
 
   const onSubmit = async (event) => {
     event.preventDefault();
+    setErrors(validate(userPayload));
     console.log("on submit called");
     const newUserData = new FormData();
     newUserData.append("profileImg", userPayload.profileImg);
@@ -106,66 +112,42 @@ const RegistrationForm = () => {
     location.href = "/";
   }
 
+  const validate = (userPayload) => {
+    const errors = {};
+    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;
+    if (!userPayload.firstName) {
+      errors.firstName = "First Name is required!";
+    }
+    if (!userPayload.lastName) {
+      errors.username = "Last Name is required!";
+    }
+    if (!userPayload.team) {
+      errors.team = "Username is required!";
+    }
+    if (!userPayload.email) {
+      errors.email = "Email is required!";
+    } else if (!regex.test(values.email)) {
+      errors.email = "This is not a valid email format!";
+    }
+    if (!userPayload.password) {
+      errors.password = "Password is required";
+    } else if (userPayload.password.length < 4) {
+      errors.password = "Password must be more than 4 characters";
+    } else if (userPayload.password.length > 10) {
+      errors.password = "Password cannot exceed more than 10 characters";
+    }
+    return errors;
+  };
+
+  useEffect(() => {
+    console.log(errors);
+    if (Object.keys(errors).length === 0) {
+      console.log(userPayload);
+    }
+  }, [errors]);
+
   return (
     <>
-      {/* <div classNameName="grid-container">
-        <h1>Register</h1>
-        <form onSubmit={onSubmit}>
-          <div>
-          <Dropzone onDrop={handleImageUpload}>
-            {({ getRootProps, getInputProps }) => (
-              <section>
-                <div {...getRootProps()}>
-                  <input {...getInputProps()} />
-                  <p>Upload Profile Picture - drag and drop or click to upload</p>
-                </div>
-              </section>
-            )}
-          </Dropzone>
-            <label>
-              Name
-              <input type="text" name="playerName" value={userPayload.playerName} onChange={onInputChange} />
-            </label>
-            <label>
-              Team
-              <input type="text" name="team" value={userPayload.team} onChange={onInputChange} />
-            </label>
-            <label>
-              Email
-              <input type="text" name="email" value={userPayload.email} onChange={onInputChange} />
-              <FormError error={errors.email} />
-            </label>
-          </div>
-          <div>
-            <label>
-              Password
-              <input
-                type="password"
-                name="password"
-                value={userPayload.password}
-                onChange={onInputChange}
-              />
-              <FormError error={errors.password} />
-            </label>
-          </div>
-          <div>
-            <label>
-              Password Confirmation
-              <input
-                type="password"
-                name="passwordConfirmation"
-                value={userPayload.passwordConfirmation}
-                onChange={onInputChange}
-              />
-              <FormError error={errors.passwordConfirmation} />
-            </label>
-          </div>
-          <div>
-            <input type="submit" classNameName="button" value="Register" />
-          </div>
-        </form>
-      </div> */}
-
       <div className="min-h-screen bg-gray-100 flex flex-col justify-center py-12 px-6 lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-md">
           <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
@@ -178,14 +160,14 @@ const RegistrationForm = () => {
 
         <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
           <div className="bg-white py-8 px-6 shadow rounded-lg sm:px-10">
-            <form className="mb-0 space-y-6" onSubmit={onSubmit}>
+            <form className="mb-0 space-y-6 pt-2 pb-3" onSubmit={onSubmit}>
               <Dropzone onDrop={handleImageUpload}>
                 {({ getRootProps, getInputProps }) => (
                   <section>
                     <div {...getRootProps()}>
                       <input {...getInputProps()} />
                       {file.length === 0 ? (
-                        <div className="flex justify-center">
+                        <div className="flex justify-center pt-6">
                           {" "}
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
@@ -211,9 +193,7 @@ const RegistrationForm = () => {
                       ) : (
                         <div className="flex justify-center mb-12">
                           <img
-                            className="shadow rounded-full max-w-full h-auto align-middle border-none justify-center"
-                            width="200vw"
-                            height="200vh"
+                            className="shadow img rounded-full align-middle border-none justify-center"
                             src={file[0]}
                           />
                         </div>
@@ -273,9 +253,7 @@ const RegistrationForm = () => {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700">
-                  Password
-                </label>
+                <label className="block text-sm font-medium text-gray-700">Password</label>
                 <div className="mt-1">
                   <input
                     name="password"
@@ -290,32 +268,18 @@ const RegistrationForm = () => {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700">
-                  Confirm Password
-                </label>
-                <div className="mt-1">
-                  <input
-                    name="passwordConfirmation"
-                    type="password"
-                    value={userPayload.passwordConfirmation}
-                    onChange={onInputChange}
-                    // autocomplete="current-password"
-                    required
-                    className="p-1 mr-2 rounded border-2 w-full"
-                  />
-                </div>
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-gray-700">
-                  Team
-                </label>
+                <label className="block text-sm font-medium text-gray-700">Team</label>
                 <div className="mt-1">
                   <select name="team" id="company-size" onChange={onInputChange} className="">
                     <option value="Team AG">Please select</option>
                     <option value="Team AG">Team AG</option>
                     <option value="AG Knights">AG Knights</option>
                     <option value="Blur">Blur</option>
+                    <option value="Spartans">Spartans</option>
+                    <option value="Suicide Squad">Suicide Squad</option>
+                    <option value="UGK">UGK</option>
+                    <option value="PTW">PTW</option>
+                    <option value="Northern Invasion">Northern Invasion</option>
                   </select>
                 </div>
               </div>

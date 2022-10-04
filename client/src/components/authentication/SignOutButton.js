@@ -1,6 +1,4 @@
 import React, { useState } from "react";
-// import { Nav } from "react-bootstrap";
-
 
 const SignOutButton = () => {
   const [shouldRedirect, setShouldRedirect] = useState(false);

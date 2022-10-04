@@ -54,7 +54,7 @@ const TopBar = ({ user }) => {
             </div>
           </div>
 
-          <div className="flex items-center space-x-1">
+          <div className="flex items-center space-x-1 mr-2">
             {user === null ? unauthenticatedButtons : authenticatedButtons}
           </div>
         </div>

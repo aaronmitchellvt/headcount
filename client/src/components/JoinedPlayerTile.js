@@ -28,11 +28,11 @@ const JoinedPlayerTile = (props) => {
           {playerName} at {props.player.estimatedArrivalTime}
         </p>
       </div>
-      {/* {isLoggedInUser && (
-        <button type="button" className="bg-red-700 text-white rounded p-3" onClick={checkout}>
+      {isLoggedInUser && (
+        <button type="button" className="bg-red-700 text-white rounded p-3 mr-2" onClick={checkout}>
           Checkout
         </button>
-      )} */}
+      )}
 
       <div className="items-center mr-3">
         <Link className="text-gray-700" to={`/players/${playerId}`}>

@@ -45,7 +45,7 @@ const EventTile = (props) => {
   };
 
   return (
-    <div className="p-4 sm:w-1/2 lg:w-1/3">
+    <div className="p-4 w-1/3">
       <div className="h-full border-2 border-gray-200 border-opacity-60 rounded-lg overflow-hidden">
         <img
           className="lg:h-72 md:h-48 w-full object-cover object-center"
@@ -70,7 +70,7 @@ const EventTile = (props) => {
                                     </svg>
                                 </a> */}
           </div>
-          {adminFeatures}
+          {/* {adminFeatures} */}
         </div>
       </div>
     </div>

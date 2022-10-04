@@ -1,9 +1,5 @@
 import React, { useState, useEffect } from "react";
 import getCurrentUser from "../services/getCurrentUser";
-import Button from "react-bootstrap/Button";
-import Form from "react-bootstrap/Form";
-import Stack from "react-bootstrap/Stack";
-
 
 const JoinEventForm = (props) => {
   const [toggle, setToggle] = useState(false);
@@ -67,14 +63,14 @@ const JoinEventForm = (props) => {
 
     <div className='mt-6 flex justify-center'>
         <form onSubmit={handleSubmit}>
-        <label className="block text-lg font-large text-gray-700 ml-2">Estimated Arrival Time</label>
+        <label className="block text-lg font-large text-gray-700 ml-2 mr-1">Estimated Arrival Time</label>
             <input 
               name="estimatedArrivalTime" 
               className="border rounded p-2 mr-4" 
               onChange={handleChange}
               value={newJoin.estimatedArrivalTime}
               placeholder="3:00" />
-            <button type="submit" className="bg-red-700 text-white p-2 rounded">Submit</button>{' '}
+            <button type="submit" className="bg-red-700 text-white p-2 rounded ml-2">Submit</button>{' '}
         </form>
       </div>
       </>

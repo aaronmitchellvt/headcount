@@ -169,14 +169,14 @@ const EventShow = (props) => {
       <div className="flex flex-wrap">
         <div className="p-4 sm:w-full md:w-1/2 lg:w-1/2">
           {/* <h2 className="text-center">Join Event</h2> */}
-          <h2 className="text-center">These Players Will Be There</h2>
 
-          <div className="p-2 h-5/6 overflow-auto">
-            {playersArray}
-          </div>
           <div className="mt-4 pb-4 p-2">
             {showForm && <JoinEventForm eventId={eventId} postNewJoin={postNewJoin} />}
           </div>
+
+          <h2 className="text-center">These Players Will Be There</h2>
+
+          <div className="p-2 h-5/6 overflow-auto">{playersArray}</div>
 
           <div className="mt-6 pt-2 pb-2 pl-2">
             <h3>Weather: {temp}</h3>
