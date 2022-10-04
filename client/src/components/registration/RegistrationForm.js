@@ -63,7 +63,7 @@ const RegistrationForm = () => {
 
   const onSubmit = async (event) => {
     event.preventDefault();
-    setErrors(validate(userPayload));
+    // setErrors(validate(userPayload));
     console.log("on submit called");
     const newUserData = new FormData();
     newUserData.append("profileImg", userPayload.profileImg);
@@ -126,7 +126,7 @@ const RegistrationForm = () => {
     }
     if (!userPayload.email) {
       errors.email = "Email is required!";
-    } else if (!regex.test(values.email)) {
+    } else if (!regex.test(password.email)) {
       errors.email = "This is not a valid email format!";
     }
     if (!userPayload.password) {
@@ -193,7 +193,7 @@ const RegistrationForm = () => {
                       ) : (
                         <div className="flex justify-center mb-12">
                           <img
-                            className="shadow img rounded-full align-middle border-none justify-center"
+                            className="shadow img-2 rounded-full align-middle border-none justify-center"
                             src={file[0]}
                           />
                         </div>
