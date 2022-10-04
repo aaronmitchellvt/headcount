@@ -53,8 +53,8 @@ const EventTile = (props) => {
           alt="blog"
         />
         <div className="p-6 bg-gray-100">
-          <h2 className="text-base font-medium text-indigo-600 mb-1">{props.event.date}</h2>
-          <h1 className="text-2xl font-semibold mb-3">{props.event.title}</h1>
+          <h2 className="text-base font-medium text-indigo-600 mb-1">{props.event.title}</h2>
+          <h1 className="text-2xl font-semibold mb-3">{props.event.date}</h1>
           {/* <p className="leading-relaxed mb-3">Lorem ipsum dolor sit amet consectetur adipisicing elit.
                                 Aperiam modi, expedita quos doloremque autem ipsum itaque incidunt ipsam reprehenderit
                                 fuga! Dolores quisquam eius cum accusamus?</p> */}
