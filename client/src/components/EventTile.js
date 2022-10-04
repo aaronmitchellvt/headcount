@@ -70,7 +70,7 @@ const EventTile = (props) => {
                                     </svg>
                                 </a> */}
           </div>
-          {/* {adminFeatures} */}
+          {adminFeatures}
         </div>
       </div>
     </div>
